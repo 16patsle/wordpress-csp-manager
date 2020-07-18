@@ -39,10 +39,23 @@ class Core {
     public function csp_init() {
         if (is_admin()) {
             // Admin
+            $option = get_option('csp_manager_admin');
         } elseif (is_user_logged_in()) {
             // Logged-in
+            $option = get_option('csp_manager_loggedin');
         } else {
             // Frontend
+            $option = get_option('csp_manager_frontend');
+        }
+
+        if($option['mode'] !== 'disabled') {
+            $header = 'Content-Security-Policy';
+
+            if($option['mode'] === 'report') {
+                $header .= '-Report-Only';
+            }
+
+            header(sprintf('%s: %s', $header, $option['policy']));
         }
     }
 
