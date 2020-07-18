@@ -135,7 +135,7 @@ class Settings {
 			'csp_frontend',
 			__('Frontend Policy', 'csp-manager'),
 			function() {
-                esc_html_e('Set the policy to be used in for visitors to the site\'s frontend.', 'csp-manager');
+                esc_html_e('Set the policy to be used for visitors to the site\'s frontend.', 'csp-manager');
             },
 			'csp'
         );
@@ -176,17 +176,26 @@ class Settings {
         ?>
 		<label>
             <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php if(get_option('csp_manager_' . $option)['mode'] === 'enforce') echo 'checked'; ?> value="enforce">
-            <?php esc_html_e('Enforce the Content Security Policy.', 'csp-manager'); ?>
+            <?php esc_html_e('Enforce', 'csp-manager'); ?>
+            <p class="description">
+			    <?php esc_html_e('Enforce the Content Security Policy.', 'csp-manager'); ?>
+		    </p>
 		</label>
         <br>
         <label>
             <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php if(get_option('csp_manager_' . $option)['mode'] === 'report') echo 'checked'; ?> value="report">
-            <?php esc_html_e('Don\'t enforce Policy, run it in Report-Only mode.', 'csp-manager'); ?>
+            <?php esc_html_e('Report-Only', 'csp-manager'); ?>
+            <p class="description">
+            <?php esc_html_e('Don\'t enforce the policy, run it in Report-Only mode.', 'csp-manager'); ?>
+		    </p>
 		</label>
         <br>
         <label>
             <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php if(get_option('csp_manager_' . $option)['mode'] === 'disabled') echo 'checked'; ?> value="disabled">
-            <?php esc_html_e('No CSP header is added.', 'csp-manager'); ?>
+            <?php esc_html_e('Disabled.', 'csp-manager'); ?>
+            <p class="description">
+            <?php esc_html_e('Don\'t add a CSP header.', 'csp-manager'); ?>
+		    </p>
 		</label>
 		<?php
     }
