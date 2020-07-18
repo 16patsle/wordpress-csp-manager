@@ -43,8 +43,8 @@ class Settings {
      * @param string $pluginfile __FILE__ path to the main plugin file.
 	 */
 	public function __construct($pluginfile) {
-		add_action( 'admin_init', array($this, 'csp_settings_init'));
-        add_action( 'admin_menu', array($this, 'csp_admin_menu'));
+		add_action('admin_init', array($this, 'csp_settings_init'));
+        add_action('admin_menu', array($this, 'csp_admin_menu'));
         // If this is the first time we've enabled the plugin, setup default settings.
 		register_activation_hook($pluginfile, array($this, 'first_time_activation'));
     }
