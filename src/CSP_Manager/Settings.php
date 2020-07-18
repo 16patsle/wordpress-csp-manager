@@ -69,95 +69,55 @@ class Settings {
 	 * @since 1.0.0
 	 */
 	public function csp_settings_init() {
-        register_setting('csp', 'csp_manager_admin');
-		register_setting('csp', 'csp_manager_loggedin');
-		register_setting('csp', 'csp_manager_frontend');
+        $this->csp_add_settings(
+            'admin',
+            __('Admin Policy', 'csp-manager'),
+            __('Set the policy to be used in the WordPress admin interface.', 'csp-manager')
+        );
 
-		add_settings_section(
-			'csp_admin',
-			__('Admin Policy', 'csp-manager'),
-			function() {
-                esc_html_e('Set the policy to be used in the WordPress admin interface.', 'csp-manager');
+        $this->csp_add_settings(
+            'loggedin',
+            __('Logged-in Policy', 'csp-manager'),
+            __('Set the policy to be used for logged-in users on the frontend pages.', 'csp-manager')
+        );
+
+        $this->csp_add_settings(
+            'frontend',
+            __('Frontend Policy', 'csp-manager'),
+            __('Set the policy to be used for visitors to the site\'s frontend.', 'csp-manager')
+        );
+    }
+
+    public function csp_add_settings($name, $title, $description) {
+        register_setting('csp', 'csp_manager_' . $name);
+
+        add_settings_section(
+			'csp_' . $name,
+			$title,
+			function() use($description) {
+                echo esc_html($description);
             },
 			'csp'
 		);
 
 		add_settings_field(
-			'csp_admin_policy',
-			__('Admin Policy Header', 'lazysizes'),
-			function() {
-		        $this->csp_render_option_policy('admin', __('Enter a CSP header string to use for admin pages.', 'csp-manager'));
+			'csp_' . $name . '_policy',
+			sprintf(__('%s Header', 'csp-manager'), $title),
+			function() use($name) {
+		        $this->csp_render_option_policy($name);
             },
 			'csp',
-			'csp_admin'
+			'csp_' . $name
         );
 
         add_settings_field(
-			'csp_admin_mode',
-			__('Admin Policy Mode', 'lazysizes'),
-			function() {
-		        $this->csp_render_option_mode('admin');
+			'csp_' . $name . '_mode',
+			sprintf(__('%s Mode', 'csp-manager'), $title),
+			function() use($name) {
+		        $this->csp_render_option_mode($name);
             },
 			'csp',
-			'csp_admin'
-        );
-        
-        add_settings_section(
-			'csp_loggedin',
-			__('Logged-in Policy', 'csp-manager'),
-			function() {
-                esc_html_e( 'Set the policy to be used in the frontend for logged-in users.', 'csp-manager' );
-            },
-			'csp'
-        );
-
-        add_settings_field(
-			'csp_loggedin_policy',
-			__('Logged-in Policy Header', 'lazysizes'),
-			function() {
-                $this->csp_render_option_policy('loggedin', __('Enter a CSP header string to use for logged-in users on the frontend pages.', 'csp-manager'));
-            },
-			'csp',
-			'csp_loggedin'
-        );
-
-        add_settings_field(
-			'csp_loggedin_mode',
-			__('Logged-in Policy Mode', 'lazysizes'),
-			function() {
-		        $this->csp_render_option_mode('loggedin');
-            },
-			'csp',
-			'csp_loggedin'
-        );
-        
-        add_settings_section(
-			'csp_frontend',
-			__('Frontend Policy', 'csp-manager'),
-			function() {
-                esc_html_e('Set the policy to be used for visitors to the site\'s frontend.', 'csp-manager');
-            },
-			'csp'
-        );
-        
-        add_settings_field(
-			'csp_frontend_policy',
-			__('Frontend Policy Header', 'lazysizes'),
-			function() {
-		        $this->csp_render_option_policy('frontend', __('Enter a CSP header string to use for frontend visitors.', 'csp-manager'));
-            },
-			'csp',
-			'csp_frontend'
-        );
-
-        add_settings_field(
-			'csp_frontend_mode',
-			__('Frontend Policy Mode', 'lazysizes'),
-			function() {
-		        $this->csp_render_option_mode('frontend');
-            },
-			'csp',
-			'csp_frontend'
+			'csp_' . $name
         );
     }
 
