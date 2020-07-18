@@ -27,6 +27,23 @@ class Core {
         
             $settings = new Settings($pluginfile);
         }
+
+        add_action('init',array($this, 'csp_init'));
+    }
+
+    /**
+     * Output CSP headers in init
+     * 
+     * @since 1.0.0
+     */
+    public function csp_init() {
+        if (is_admin()) {
+            // Admin
+        } elseif (is_user_logged_in()) {
+            // Logged-in
+        } else {
+            // Frontend
+        }
     }
 
 }
