@@ -19,7 +19,7 @@
 
 defined('ABSPATH') || die('No script kiddies please!');
 
-require_once __DIR__ . '/src/CSP_Manager/Settings.php';
-use CSP_Manager\Settings;
+require_once __DIR__ . '/src/CSP_Manager/Core.php';
+use CSP_Manager\Core;
 
-$settings = new Settings(__FILE__);
+$core = new Core(__FILE__);
