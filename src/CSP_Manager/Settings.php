@@ -100,15 +100,7 @@ class Settings {
 			'csp'
 		);
 
-		add_settings_field(
-			'csp_' . $name . '_policy',
-			sprintf(__('%s Header', 'csp-manager'), $title),
-			function() use($name) {
-		        $this->csp_render_option_policy($name);
-            },
-			'csp',
-			'csp_' . $name
-        );
+        $this->csp_add_directive_setting($name, 'policy');
 
         add_settings_field(
 			'csp_' . $name . '_mode',
@@ -121,17 +113,30 @@ class Settings {
         );
     }
 
+    public function csp_add_directive_setting($name, $directive) {
+        add_settings_field(
+			'csp_' . $name . '_' . $directive,
+			sprintf(__('Policy: %s', 'csp-manager'), $directive),
+			function() use($name, $directive) {
+		        $this->csp_render_option_policy($name, $directive, 'Temp description');
+            },
+			'csp',
+			'csp_' . $name
+        );
+    }
+
     /**
      * Display the policy text box for $option
      * 
      * @since 1.0.0
-     * @param string $option Current option, either 'admin', 'loggedin' or 'frontend'.
+     * @param string $option Current internal option, either 'admin', 'loggedin' or 'frontend'.
+     * @param string $directive The CSP directive to create textbox for.
      * @param string $description Description for the text area.
      */
-    public function csp_render_option_policy($option, $description) {
+    public function csp_render_option_policy($option, $directive, $description) {
         ?>
 		<label>
-            <textarea name="csp_manager_<?php echo $option; ?>[policy]" cols="80" rows="5"><?php echo esc_textarea(get_option('csp_manager_' . $option)['policy']) ?></textarea>
+            <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="5"><?php echo esc_textarea(get_option('csp_manager_' . $option)[$directive]) ?></textarea>
 			<p class="description">
 			    <?php echo esc_html($description); ?>
 		    </p>
