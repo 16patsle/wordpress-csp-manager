@@ -161,6 +161,13 @@ class Settings {
         );
     }
 
+    /**
+     * Display the policy text box for $option
+     * 
+     * @since 1.0.0
+     * @param string $option Current option, either 'admin', 'loggedin' or 'frontend'.
+     * @param string $description Description for the text area.
+     */
     public function csp_render_option_policy($option, $description) {
         ?>
 		<label>
@@ -172,6 +179,12 @@ class Settings {
 		<?php
     }
 
+    /**
+     * Display the mode radio buttons for $option
+     * 
+     * @since 1.0.0
+     * @param string $option Current option, either 'admin', 'loggedin' or 'frontend'.
+     */
     public function csp_render_option_mode($option) {
         ?>
 		<label>
