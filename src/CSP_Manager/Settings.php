@@ -23,18 +23,46 @@ class Settings {
 	 */
 	protected $defaults = array(
 		'admin' => array(
-            'policy' => '',
             'mode' => 'disabled',
+            'enable_default-src' => 1,
+            'enable_script-src' => 1,
+            'enable_style-src' => 1,
+            'enable_img-src' => 1,
         ),
         'loggedin' => array(
-            'policy' => '',
             'mode' => 'disabled',
+            'enable_default-src' => 1,
+            'enable_script-src' => 1,
+            'enable_style-src' => 1,
+            'enable_img-src' => 1,
         ),
         'frontend' => array(
-            'policy' => '',
             'mode' => 'disabled',
+            'enable_default-src' => 1,
+            'enable_script-src' => 1,
+            'enable_style-src' => 1,
+            'enable_img-src' => 1,
         ),
-	);
+    );
+    
+    protected const DIRECTIVES = [
+        'default-src',
+        'script-src',
+        'style-src',
+        'img-src',
+        'media-src',
+        'font-src',
+        'connect-src',
+        'frame-src',
+        'manifest-src',
+        'object-src',
+        'prefetch-src',
+        'script-src-elem',
+        'script-src-attr',
+        'style-src-elem',
+        'style-src-attr',
+        'worker-src',
+    ];
 
     /**
 	 * Set up actions needed for the plugin's admin interface
@@ -69,6 +97,12 @@ class Settings {
 	 * @since 1.0.0
 	 */
 	public function csp_settings_init() {
+        $this->options = [
+            'admin' => get_option('csp_manager_admin'),
+            'loggedin' => get_option('csp_manager_loggedin'),
+            'frontend' => get_option('csp_manager_frontend')
+        ];
+
         $this->csp_add_settings(
             'admin',
             __('Admin Policy', 'csp-manager'),
@@ -100,7 +134,7 @@ class Settings {
 			'csp'
 		);
 
-        $this->csp_add_directive_setting($name, 'policy');
+        $this->csp_add_directive_setting($name, 'default-src');
 
         add_settings_field(
 			'csp_' . $name . '_mode',
@@ -135,12 +169,19 @@ class Settings {
      */
     public function csp_render_option_policy($option, $directive, $description) {
         ?>
-		<label>
-            <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="5"><?php echo esc_textarea(get_option('csp_manager_' . $option)[$directive]) ?></textarea>
-			<p class="description">
-			    <?php echo esc_html($description); ?>
-		    </p>
-		</label>
+		<fieldset>
+            <label>
+				<input type="checkbox" name="csp_manager_<?php echo $option; ?>[enable_<?php echo $directive; ?>]" <?php checked($this->get_checkbox_option($option, 'enable_' . $directive), 1, true); ?> value="1">
+				<?php esc_html_e( 'Enable', 'csp-manager' ); ?>
+			</label>
+            <br>
+            <label>
+                <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="5"><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
+		    	<p class="description">
+		    	    <?php echo esc_html($description); ?>
+		        </p>
+		    </label>
+        </fieldset>
 		<?php
     }
 
@@ -153,7 +194,7 @@ class Settings {
     public function csp_render_option_mode($option) {
         ?>
 		<label>
-            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php if(get_option('csp_manager_' . $option)['mode'] === 'enforce') echo 'checked'; ?> value="enforce">
+            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'enforce', true); ?> value="enforce">
             <?php esc_html_e('Enforce', 'csp-manager'); ?>
             <p class="description">
 			    <?php esc_html_e('Enforce the Content Security Policy.', 'csp-manager'); ?>
@@ -161,7 +202,7 @@ class Settings {
 		</label>
         <br>
         <label>
-            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php if(get_option('csp_manager_' . $option)['mode'] === 'report') echo 'checked'; ?> value="report">
+            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'report', true); ?> value="report">
             <?php esc_html_e('Report-Only', 'csp-manager'); ?>
             <p class="description">
             <?php esc_html_e('Don\'t enforce the policy, run it in Report-Only mode.', 'csp-manager'); ?>
@@ -169,7 +210,7 @@ class Settings {
 		</label>
         <br>
         <label>
-            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php if(get_option('csp_manager_' . $option)['mode'] === 'disabled') echo 'checked'; ?> value="disabled">
+            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'disabled', true); ?> value="disabled">
             <?php esc_html_e('Disabled.', 'csp-manager'); ?>
             <p class="description">
             <?php esc_html_e('Don\'t add a CSP header.', 'csp-manager'); ?>
@@ -203,5 +244,21 @@ class Settings {
 		    </div>
 		    <?php
         } );
+    }
+
+    public function get_textarea_option($option, $directive) {
+        if(isset($this->options[$option][$directive])) {
+            return esc_textarea($this->options[$option][$directive]);
+        } else {
+            return '';
+        }
+    }
+
+    public function get_checkbox_option($option, $directive) {
+        if(isset($this->options[$option][$directive])) {
+            return $this->options[$option][$directive];
+        } else {
+            return 0;
+        }
     }
 }
