@@ -5,6 +5,8 @@
  * @package CSP_Manager
  */
 
+declare(strict_types=1);
+
 namespace CSP_Manager;
 
 defined('ABSPATH') || die('No script kiddies please!');
@@ -21,7 +23,7 @@ class Core {
      * @since 1.0.0
      * @param string $pluginfile __FILE__ path to the main plugin file.
 	 */
-	public function __construct($pluginfile) {
+	public function __construct(string $pluginfile) {
 		if(is_admin() && !wp_doing_ajax()) {
             require_once __DIR__ . '/Settings.php';
         

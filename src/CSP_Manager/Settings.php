@@ -5,6 +5,8 @@
  * @package CSP_Manager
  */
 
+declare(strict_types=1);
+
 namespace CSP_Manager;
 
 defined('ABSPATH') || die('No script kiddies please!');
@@ -59,7 +61,7 @@ class Settings {
      * @since 1.0.0
      * @param string $pluginfile __FILE__ path to the main plugin file.
 	 */
-	public function __construct($pluginfile) {
+	public function __construct(string $pluginfile) {
         $this->directives = [
             'default-src' => __('Temp description', 'csp-manager'),
             'script-src' => __('Temp description', 'csp-manager'),
@@ -130,7 +132,7 @@ class Settings {
         );
     }
 
-    public function csp_add_settings($name, $title, $description) {
+    public function csp_add_settings(string $name, string $title, string $description) {
         register_setting('csp', 'csp_manager_' . $name);
 
         add_settings_section(
@@ -157,7 +159,7 @@ class Settings {
         );
     }
 
-    public function csp_add_directive_setting($name, $directive, $description) {
+    public function csp_add_directive_setting(string $name, string $directive, string $description) {
         /* translators: %s: A CSP directive like 'default-src' */
         $policy_string = __('Policy: %s', 'csp-manager');
 
@@ -180,7 +182,7 @@ class Settings {
      * @param string $directive The CSP directive to create textbox for.
      * @param string $description Description for the text area.
      */
-    public function csp_render_option_policy($option, $directive, $description) {
+    public function csp_render_option_policy(string $option, string $directive, string $description) {
         ?>
 		<fieldset>
             <label>
@@ -204,7 +206,7 @@ class Settings {
      * @since 1.0.0
      * @param string $option Current option, either 'admin', 'loggedin' or 'frontend'.
      */
-    public function csp_render_option_mode($option) {
+    public function csp_render_option_mode(string $option) {
         ?>
 		<label>
             <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'enforce', true); ?> value="enforce">
@@ -259,7 +261,7 @@ class Settings {
         } );
     }
 
-    public function get_textarea_option($option, $directive) {
+    public function get_textarea_option(string $option, string $directive) : string {
         if(isset($this->options[$option][$directive])) {
             return esc_textarea($this->options[$option][$directive]);
         } else {
@@ -267,7 +269,7 @@ class Settings {
         }
     }
 
-    public function get_checkbox_option($option, $directive) {
+    public function get_checkbox_option(string $option, string $directive) : int {
         if(isset($this->options[$option][$directive])) {
             return $this->options[$option][$directive];
         } else {
