@@ -21,29 +21,29 @@ class Settings {
      * @since 1.0.0
 	 * @var array[]
 	 */
-	protected $defaults = array(
-		'admin' => array(
+	protected $defaults = [
+		'admin' => [
             'mode' => 'disabled',
             'enable_default-src' => 1,
             'enable_script-src' => 1,
             'enable_style-src' => 1,
             'enable_img-src' => 1,
-        ),
-        'loggedin' => array(
+        ],
+        'loggedin' => [
             'mode' => 'disabled',
             'enable_default-src' => 1,
             'enable_script-src' => 1,
             'enable_style-src' => 1,
             'enable_img-src' => 1,
-        ),
-        'frontend' => array(
+        ],
+        'frontend' => [
             'mode' => 'disabled',
             'enable_default-src' => 1,
             'enable_script-src' => 1,
             'enable_style-src' => 1,
             'enable_img-src' => 1,
-        ),
-    );
+        ],
+    ];
     
     /**
      * CSP directives and descriptions
@@ -79,10 +79,10 @@ class Settings {
             'worker-src' => __('Temp description', 'csp-manager'),
         ];
 
-		add_action('admin_init', array($this, 'csp_settings_init'));
-        add_action('admin_menu', array($this, 'csp_admin_menu'));
+		add_action('admin_init', [$this, 'csp_settings_init']);
+        add_action('admin_menu', [$this, 'csp_admin_menu']);
         // If this is the first time we've enabled the plugin, setup default settings.
-		register_activation_hook($pluginfile, array($this, 'first_time_activation'));
+		register_activation_hook($pluginfile, [$this, 'first_time_activation']);
     }
 
     /**

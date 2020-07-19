@@ -28,7 +28,7 @@ class Core {
             $settings = new Settings($pluginfile);
         }
 
-        add_action('init',array($this, 'csp_init'));
+        add_action('init',[$this, 'csp_init']);
     }
 
     /**
