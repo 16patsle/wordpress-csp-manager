@@ -148,9 +148,12 @@ class Settings {
     }
 
     public function csp_add_directive_setting($name, $directive) {
+        /* translators: %s: A CSP directive like 'default-src' */
+        $policy_string = __('Policy: %s', 'csp-manager');
+
         add_settings_field(
 			'csp_' . $name . '_' . $directive,
-			sprintf(__('Policy: %s', 'csp-manager'), $directive),
+			sprintf($policy_string, $directive),
 			function() use($name, $directive) {
 		        $this->csp_render_option_policy($name, $directive, 'Temp description');
             },
