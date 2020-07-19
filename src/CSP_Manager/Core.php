@@ -55,7 +55,16 @@ class Core {
                 $header .= '-Report-Only';
             }
 
-            header(sprintf('%s: %s', $header, $option['policy']));
+            $content = '';
+
+            foreach ($option as $directive => $policy) {
+                if(strpos($directive, 'enable_') === 0 || $directive === 'mode') {
+                    continue;
+                }
+                $content .= $directive . ' ' . $policy . '; ';
+            }
+
+            header(sprintf('%s: %s', $header, $content));
         }
     }
 
