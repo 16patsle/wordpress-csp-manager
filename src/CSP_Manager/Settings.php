@@ -45,24 +45,13 @@ class Settings {
         ),
     );
     
-    protected const DIRECTIVES = [
-        'default-src',
-        'script-src',
-        'style-src',
-        'img-src',
-        'media-src',
-        'font-src',
-        'connect-src',
-        'frame-src',
-        'manifest-src',
-        'object-src',
-        'prefetch-src',
-        'script-src-elem',
-        'script-src-attr',
-        'style-src-elem',
-        'style-src-attr',
-        'worker-src',
-    ];
+    /**
+     * CSP directives and descriptions
+     * 
+     * @since 1.0.0
+     * @var string[]
+     */
+    protected $directives; 
 
     /**
 	 * Set up actions needed for the plugin's admin interface
@@ -71,6 +60,25 @@ class Settings {
      * @param string $pluginfile __FILE__ path to the main plugin file.
 	 */
 	public function __construct($pluginfile) {
+        $this->directives = [
+            'default-src' => __('Temp description', 'csp-manager'),
+            'script-src' => __('Temp description', 'csp-manager'),
+            'style-src' => __('Temp description', 'csp-manager'),
+            'img-src' => __('Temp description', 'csp-manager'),
+            'media-src' => __('Temp description', 'csp-manager'),
+            'font-src' => __('Temp description', 'csp-manager'),
+            'connect-src' => __('Temp description', 'csp-manager'),
+            'frame-src' => __('Temp description', 'csp-manager'),
+            'manifest-src' => __('Temp description', 'csp-manager'),
+            'object-src' => __('Temp description', 'csp-manager'),
+            'prefetch-src' => __('Temp description', 'csp-manager'),
+            'script-src-elem' => __('Temp description', 'csp-manager'),
+            'script-src-attr' => __('Temp description', 'csp-manager'),
+            'style-src-elem' => __('Temp description', 'csp-manager'),
+            'style-src-attr' => __('Temp description', 'csp-manager'),
+            'worker-src' => __('Temp description', 'csp-manager'),
+        ];
+
 		add_action('admin_init', array($this, 'csp_settings_init'));
         add_action('admin_menu', array($this, 'csp_admin_menu'));
         // If this is the first time we've enabled the plugin, setup default settings.
@@ -134,7 +142,9 @@ class Settings {
 			'csp'
 		);
 
-        $this->csp_add_directive_setting($name, 'default-src');
+        foreach ($this->directives as $directive => $description) {
+            $this->csp_add_directive_setting($name, $directive, $description);
+        }
 
         add_settings_field(
 			'csp_' . $name . '_mode',
@@ -147,15 +157,15 @@ class Settings {
         );
     }
 
-    public function csp_add_directive_setting($name, $directive) {
+    public function csp_add_directive_setting($name, $directive, $description) {
         /* translators: %s: A CSP directive like 'default-src' */
         $policy_string = __('Policy: %s', 'csp-manager');
 
         add_settings_field(
 			'csp_' . $name . '_' . $directive,
 			sprintf($policy_string, $directive),
-			function() use($name, $directive) {
-		        $this->csp_render_option_policy($name, $directive, 'Temp description');
+			function() use($name, $directive, $description) {
+		        $this->csp_render_option_policy($name, $directive, $description);
             },
 			'csp',
 			'csp_' . $name
@@ -179,7 +189,7 @@ class Settings {
 			</label>
             <br>
             <label>
-                <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="5"><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
+                <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2"><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
 		    	<p class="description">
 		    	    <?php echo esc_html($description); ?>
 		        </p>
