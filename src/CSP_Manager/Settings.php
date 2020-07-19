@@ -18,7 +18,7 @@ defined('ABSPATH') || die('No script kiddies please!');
 class Settings {
 
     /**
-	 * The default settings
+	 * The default settings.
 	 *
      * @since 1.0.0
 	 * @var array[]
@@ -48,12 +48,20 @@ class Settings {
     ];
     
     /**
-     * CSP directives and descriptions
+     * CSP directives and descriptions.
      * 
      * @since 1.0.0
      * @var string[]
      */
-    protected $directives; 
+    protected $directives;
+
+    /**
+     * Store options in memory.
+     * 
+     * @since 1.0.0
+     * @var array[]
+     */
+    private $options;
 
     /**
 	 * Set up actions needed for the plugin's admin interface
@@ -79,6 +87,12 @@ class Settings {
             'style-src-elem' => __('Temp description', 'csp-manager'),
             'style-src-attr' => __('Temp description', 'csp-manager'),
             'worker-src' => __('Temp description', 'csp-manager'),
+        ];
+
+        $this->options = [
+            'admin' => get_option('csp_manager_admin'),
+            'loggedin' => get_option('csp_manager_loggedin'),
+            'frontend' => get_option('csp_manager_frontend')
         ];
 
 		add_action('admin_init', [$this, 'csp_settings_init']);
@@ -107,12 +121,6 @@ class Settings {
 	 * @since 1.0.0
 	 */
 	public function csp_settings_init() {
-        $this->options = [
-            'admin' => get_option('csp_manager_admin'),
-            'loggedin' => get_option('csp_manager_loggedin'),
-            'frontend' => get_option('csp_manager_frontend')
-        ];
-
         $this->csp_add_settings(
             'admin',
             __('Admin Policy', 'csp-manager'),
@@ -132,6 +140,14 @@ class Settings {
         );
     }
 
+    /**
+     * Display all settings for the internal option called $name.
+     * 
+     * @since 1.0.0
+     * @param string $name Current internal option, either 'admin', 'loggedin' or 'frontend'.
+     * @param string $title The title to use for the settings section.
+     * @param string $description The description to use for the settings section.
+     */
     public function csp_add_settings(string $name, string $title, string $description) {
         register_setting('csp', 'csp_manager_' . $name);
 
@@ -159,45 +175,41 @@ class Settings {
         );
     }
 
-    public function csp_add_directive_setting(string $name, string $directive, string $description) {
-        /* translators: %s: A CSP directive like 'default-src' */
-        $policy_string = __('Policy: %s', 'csp-manager');
-
-        add_settings_field(
-			'csp_' . $name . '_' . $directive,
-			sprintf($policy_string, $directive),
-			function() use($name, $directive, $description) {
-		        $this->csp_render_option_policy($name, $directive, $description);
-            },
-			'csp',
-			'csp_' . $name
-        );
-    }
-
     /**
-     * Display the policy text box for $option
+     * Display the policy text box for $option's $directive setting.
      * 
      * @since 1.0.0
      * @param string $option Current internal option, either 'admin', 'loggedin' or 'frontend'.
      * @param string $directive The CSP directive to create textbox for.
-     * @param string $description Description for the text area.
+     * @param string $description Description for the directive's text area.
      */
-    public function csp_render_option_policy(string $option, string $directive, string $description) {
-        ?>
-		<fieldset>
-            <label>
-				<input type="checkbox" name="csp_manager_<?php echo $option; ?>[enable_<?php echo $directive; ?>]" <?php checked($this->get_checkbox_option($option, 'enable_' . $directive), 1, true); ?> value="1">
-				<?php esc_html_e( 'Enable', 'csp-manager' ); ?>
-			</label>
-            <br>
-            <label>
-                <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2"><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
-		    	<p class="description">
-		    	    <?php echo esc_html($description); ?>
-		        </p>
-		    </label>
-        </fieldset>
-		<?php
+    public function csp_add_directive_setting(string $option, string $directive, string $description) {
+        /* translators: %s: A CSP directive like 'default-src' */
+        $policy_string = __('Policy: %s', 'csp-manager');
+
+        add_settings_field(
+			'csp_' . $option . '_' . $directive,
+			sprintf($policy_string, $directive),
+			function() use($option, $directive, $description) {
+		        ?>
+		        <fieldset>
+                    <label>
+		        		<input type="checkbox" name="csp_manager_<?php echo $option; ?>[enable_<?php echo $directive; ?>]" <?php checked($this->get_directive_enabled_option($option, $directive), 1, true); ?> value="1">
+		        		<?php esc_html_e( 'Enable', 'csp-manager' ); ?>
+		        	</label>
+                    <br>
+                    <label>
+                        <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2"><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
+		            	<p class="description">
+		            	    <?php echo esc_html($description); ?>
+		                </p>
+		            </label>
+                </fieldset>
+		        <?php
+            },
+			'csp',
+			'csp_' . $option
+        );
     }
 
     /**
@@ -261,6 +273,14 @@ class Settings {
         } );
     }
 
+    /**
+     * Get the value of a CSP directive policy option, for use in a text area
+     * 
+     * @since 1.0.0
+     * @param string $option Either 'admin', 'loggedin' or 'frontend'.
+     * @param string $directive A CSP directive to get the policy for.
+     * @return string Value of directive, or empty string.
+     */
     public function get_textarea_option(string $option, string $directive) : string {
         if(isset($this->options[$option][$directive])) {
             return esc_textarea($this->options[$option][$directive]);
@@ -269,9 +289,17 @@ class Settings {
         }
     }
 
-    public function get_checkbox_option(string $option, string $directive) : int {
-        if(isset($this->options[$option][$directive])) {
-            return $this->options[$option][$directive];
+    /**
+     * Get the enabled value of a CSP directive option, for use in a checkbox
+     * 
+     * @since 1.0.0
+     * @param string $option Either 'admin', 'loggedin' or 'frontend'.
+     * @param string $directive A CSP directive to check if enabled.
+     * @return int Enabled status of the directive, else 0.
+     */
+    public function get_directive_enabled_option(string $option, string $directive) : int {
+        if(isset($this->options[$option]['enable_' . $directive])) {
+            return (int)$this->options[$option]['enable_' . $directive];
         } else {
             return 0;
         }
