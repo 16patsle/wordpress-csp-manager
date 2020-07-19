@@ -38,7 +38,7 @@ class Core {
      * 
      * @since 1.0.0
      */
-    public function csp_init() {
+    public function csp_init(): void {
         if (is_admin()) {
             // Admin
             $option = get_option('csp_manager_admin');

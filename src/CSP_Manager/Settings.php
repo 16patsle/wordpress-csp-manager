@@ -106,7 +106,7 @@ class Settings {
 	 *
 	 * @since 1.0.0
 	 */
-	public function first_time_activation() {
+	public function first_time_activation(): void {
 		$defaults = $this->defaults;
 		foreach ($defaults as $key => $val) {
 			if (get_option('csp_manager_' . $key, false) === false) {
@@ -120,7 +120,7 @@ class Settings {
 	 *
 	 * @since 1.0.0
 	 */
-	public function csp_settings_init() {
+	public function csp_settings_init(): void {
         $this->csp_add_settings(
             'admin',
             __('Admin Policy', 'csp-manager'),
@@ -148,7 +148,7 @@ class Settings {
      * @param string $title The title to use for the settings section.
      * @param string $description The description to use for the settings section.
      */
-    public function csp_add_settings(string $name, string $title, string $description) {
+    public function csp_add_settings(string $name, string $title, string $description): void {
         register_setting('csp', 'csp_manager_' . $name);
 
         add_settings_section(
@@ -183,7 +183,7 @@ class Settings {
      * @param string $directive The CSP directive to create textbox for.
      * @param string $description Description for the directive's text area.
      */
-    public function csp_add_directive_setting(string $option, string $directive, string $description) {
+    public function csp_add_directive_setting(string $option, string $directive, string $description): void {
         /* translators: %s: A CSP directive like 'default-src' */
         $policy_string = __('Policy: %s', 'csp-manager');
 
@@ -218,7 +218,7 @@ class Settings {
      * @since 1.0.0
      * @param string $option Current option, either 'admin', 'loggedin' or 'frontend'.
      */
-    public function csp_render_option_mode(string $option) {
+    public function csp_render_option_mode(string $option): void {
         ?>
 		<label>
             <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'enforce', true); ?> value="enforce">
@@ -251,7 +251,7 @@ class Settings {
 	 *
 	 * @since 1.0.0
 	 */
-	public function csp_admin_menu() {
+	public function csp_admin_menu(): void {
 		$admin_page = add_options_page(
             'Content Security Policy Manager',
             'CSP Manager',
@@ -281,7 +281,7 @@ class Settings {
      * @param string $directive A CSP directive to get the policy for.
      * @return string Value of directive, or empty string.
      */
-    public function get_textarea_option(string $option, string $directive) : string {
+    public function get_textarea_option(string $option, string $directive): string {
         if(isset($this->options[$option][$directive])) {
             return esc_textarea($this->options[$option][$directive]);
         } else {
@@ -297,7 +297,7 @@ class Settings {
      * @param string $directive A CSP directive to check if enabled.
      * @return int Enabled status of the directive, else 0.
      */
-    public function get_directive_enabled_option(string $option, string $directive) : int {
+    public function get_directive_enabled_option(string $option, string $directive): int {
         if(isset($this->options[$option]['enable_' . $directive])) {
             return (int)$this->options[$option]['enable_' . $directive];
         } else {
