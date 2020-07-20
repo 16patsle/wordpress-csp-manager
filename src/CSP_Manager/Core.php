@@ -63,7 +63,10 @@ class Core {
                 if(strpos($directive, 'enable_') === 0 || $directive === 'mode' || strpos($directive, 'header_') === 0) {
                     continue;
                 }
-                $content .= $directive . ' ' . $policy . '; ';
+                
+                if(isset($option['enable_' . $directive]) && $option['enable_' . $directive]) {
+                    $content .= $directive . ' ' . $policy . '; ';
+                }
             }
 
             header(sprintf('%s: %s', $header, $content));
