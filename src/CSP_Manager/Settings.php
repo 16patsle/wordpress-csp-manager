@@ -27,23 +27,17 @@ class Settings {
 		'admin' => [
             'mode' => 'disabled',
             'enable_default-src' => 1,
-            'enable_script-src' => 1,
-            'enable_style-src' => 1,
-            'enable_img-src' => 1,
+            'default-src' => '\'self\'',
         ],
         'loggedin' => [
             'mode' => 'disabled',
             'enable_default-src' => 1,
-            'enable_script-src' => 1,
-            'enable_style-src' => 1,
-            'enable_img-src' => 1,
+            'default-src' => '\'self\'',
         ],
         'frontend' => [
             'mode' => 'disabled',
             'enable_default-src' => 1,
-            'enable_script-src' => 1,
-            'enable_style-src' => 1,
-            'enable_img-src' => 1,
+            'default-src' => '\'self\'',
         ],
     ];
     
