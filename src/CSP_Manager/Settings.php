@@ -71,22 +71,26 @@ class Settings {
 	 */
 	public function __construct(string $pluginfile) {
         $this->directives = [
-            'default-src' => __('Temp description', 'csp-manager'),
-            'script-src' => __('Temp description', 'csp-manager'),
-            'style-src' => __('Temp description', 'csp-manager'),
-            'img-src' => __('Temp description', 'csp-manager'),
-            'media-src' => __('Temp description', 'csp-manager'),
-            'font-src' => __('Temp description', 'csp-manager'),
-            'connect-src' => __('Temp description', 'csp-manager'),
-            'frame-src' => __('Temp description', 'csp-manager'),
-            'manifest-src' => __('Temp description', 'csp-manager'),
-            'object-src' => __('Temp description', 'csp-manager'),
-            'prefetch-src' => __('Temp description', 'csp-manager'),
-            'script-src-elem' => __('Temp description', 'csp-manager'),
-            'script-src-attr' => __('Temp description', 'csp-manager'),
-            'style-src-elem' => __('Temp description', 'csp-manager'),
-            'style-src-attr' => __('Temp description', 'csp-manager'),
-            'worker-src' => __('Temp description', 'csp-manager'),
+            'default-src' => esc_html__('Fallback for the src directives.', 'csp-manager'),
+            /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
+            'script-src' => sprintf(esc_html__('Allowed JavaScript sources. %1$s allows usage of eval, while %2$s allows inline scripts.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
+            /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
+            'style-src' => sprintf(esc_html__('Allowed style sources. %1$s allows usage of eval, while %2$s allows inline styles.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
+            'img-src' => esc_html__('Allowed sources for images (including favicons).', 'csp-manager'),
+            'media-src' => esc_html__('Allowed audio/video sources.', 'csp-manager'),
+            'font-src' => esc_html__('Allowed web font file sources.', 'csp-manager'),
+            'connect-src' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
+            'frame-src' => esc_html__('Allowed sources for frame elements.', 'csp-manager'),
+            'manifest-src' => esc_html__('Allowed sources for web app manifests.', 'csp-manager'),
+            /* translators: %s: <code>\'none\'</code> */
+            'object-src' => sprintf(esc_html__('Allowed sources for Flash content, Java applets or other content loaded using object, embed or applet tags. Recommended to set to %s if you\'re not using these types of content.', 'csp-manager'), '<code>\'none\'</code>'),
+            /* translators: 1: <code>&lt;link rel="prefetch"&gt;</code> 2: 1: <code>&lt;link rel="prerender"&gt;</code> */
+            'prefetch-src' => sprintf(esc_html__('Allowed sources in %1$s and %2$s elements.', 'csp-manager'), '<code>&lt;link rel="prefetch"&gt;</code>', '<code>&lt;link rel="prerender"&gt;</code>'),
+            'script-src-elem' => esc_html__('Allowed sources for script elements, falls back to script-src if missing.', 'csp-manager'),
+            'script-src-attr' => esc_html__('Allowed inline event handler sources, falls back to script-src if missing.', 'csp-manager'),
+            'style-src-elem' => esc_html__('Allowed sources for style and stylesheet link elements, falls back to style-src if missing.', 'csp-manager'),
+            'style-src-attr' => esc_html__('Allowed inline style sources, falls back to style-src if missing.', 'csp-manager'),
+            'worker-src' => esc_html__('Allowed sources for web workers and service workers.', 'csp-manager'),
         ];
 
         $this->options = [
@@ -181,7 +185,7 @@ class Settings {
      * @since 1.0.0
      * @param string $option Current internal option, either 'admin', 'loggedin' or 'frontend'.
      * @param string $directive The CSP directive to create textbox for.
-     * @param string $description Description for the directive's text area.
+     * @param string $description Description for the directive's text area, HTML escaped if necessary.
      */
     public function csp_add_directive_setting(string $option, string $directive, string $description): void {
         /* translators: %s: A CSP directive like 'default-src' */
@@ -201,7 +205,7 @@ class Settings {
                     <label>
                         <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2"><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
 		            	<p class="description">
-		            	    <?php echo esc_html($description); ?>
+		            	    <?php echo $description; ?>
 		                </p>
 		            </label>
                 </fieldset>
