@@ -91,6 +91,8 @@ class Settings {
             'style-src-elem' => esc_html__('Allowed sources for style and stylesheet link elements, falls back to style-src if missing.', 'csp-manager'),
             'style-src-attr' => esc_html__('Allowed inline style sources, falls back to style-src if missing.', 'csp-manager'),
             'worker-src' => esc_html__('Allowed sources for web workers and service workers.', 'csp-manager'),
+            'report-uri' => esc_html__('URL to send a report to when policy violations happen. Prefer usage of report-to instead, this directive should only be used for compatibility purposes.', 'csp-manager'),
+            'report-to' => esc_html__('Reporting group name to send violation reports to. Used together with the Report-To header, which defines these report groups and where to send the reports.', 'csp-manager'),
         ];
 
         $this->options = [
