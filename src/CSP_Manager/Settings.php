@@ -158,12 +158,8 @@ class Settings {
                 echo esc_html($description);
             },
 			'csp'
-		);
-
-        foreach ($this->directives as $directive => $description) {
-            $this->csp_add_directive_setting($name, $directive, $description);
-        }
-
+        );
+        
         add_settings_field(
 			'csp_' . $name . '_mode',
 			sprintf(__('%s Mode', 'csp-manager'), $title),
@@ -173,6 +169,10 @@ class Settings {
 			'csp',
 			'csp_' . $name
         );
+
+        foreach ($this->directives as $directive => $description) {
+            $this->csp_add_directive_setting($name, $directive, $description);
+        }
     }
 
     /**
