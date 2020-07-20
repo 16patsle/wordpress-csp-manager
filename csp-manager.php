@@ -9,7 +9,7 @@
  * Plugin Name:       Content Security Policy Manager
  * Description:       Manage Content Security Policies separately for wp-admin, logged in users and regular users.
  * Version:           1.0.0
- * Requires at least: 4.5
+ * Requires at least: 4.6
  * Requires PHP:      7.2
  * Author:            Patrick Sletvold
  * Author URI:        https://www.multitek.no/
