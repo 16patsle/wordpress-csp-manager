@@ -184,7 +184,7 @@ class Settings {
 		            <label>
                         <textarea name="csp_manager_<?php echo $name; ?>[header_reportto]" cols="80" rows="2"><?php echo $this->get_textarea_option($name, 'header_reportto'); ?></textarea>
 		            	<p class="description">
-		            	    <?php esc_html_e('Set the value of the Report-To header, used together with the report-to directive.', 'csp-manager'); ?>
+		            	    <?php esc_html_e('Set the value of the Report-To header, used together with the report-to directive. The header will only be sent if a value is set.', 'csp-manager'); ?>
 		                </p>
 		            </label>
                 <?php
