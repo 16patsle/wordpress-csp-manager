@@ -174,6 +174,24 @@ class Settings {
         foreach ($this->directives as $directive => $description) {
             $this->csp_add_directive_setting($name, $directive, $description);
         }
+
+        add_settings_field(
+            'csp_' . $name . '_reportto',
+            /* translators: %s: Translated version of either 'Admin Policy', 'Logged-in Policy' or 'Frontend Policy' */
+			sprintf(__('%s Report-To Header', 'csp-manager'), $title),
+			function() use($name) {
+                ?>
+		            <label>
+                        <textarea name="csp_manager_<?php echo $name; ?>[header_reportto]" cols="80" rows="2"><?php echo $this->get_textarea_option($name, 'header_reportto'); ?></textarea>
+		            	<p class="description">
+		            	    <?php esc_html_e('Set the value of the Report-To header, used together with the report-to directive.', 'csp-manager'); ?>
+		                </p>
+		            </label>
+                <?php
+            },
+			'csp',
+			'csp_' . $name
+        );
     }
 
     /**

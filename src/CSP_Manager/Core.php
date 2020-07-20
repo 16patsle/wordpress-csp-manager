@@ -60,13 +60,17 @@ class Core {
             $content = '';
 
             foreach ($option as $directive => $policy) {
-                if(strpos($directive, 'enable_') === 0 || $directive === 'mode') {
+                if(strpos($directive, 'enable_') === 0 || $directive === 'mode' || strpos($directive, 'header_') === 0) {
                     continue;
                 }
                 $content .= $directive . ' ' . $policy . '; ';
             }
 
             header(sprintf('%s: %s', $header, $content));
+
+            if(isset($option['header_reportto']) && !empty($option['header_reportto'])) {
+                header(sprintf('Report-To: %s', $option['header_reportto']));
+            }
         }
     }
 
