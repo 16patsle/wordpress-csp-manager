@@ -66,6 +66,7 @@ class Settings {
 	public function __construct(string $pluginfile) {
         $this->directives = [
             'default-src' => esc_html__('Fallback for the src directives.', 'csp-manager'),
+            'connect-src' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
             /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
             'script-src' => sprintf(esc_html__('Allowed JavaScript sources. %1$s allows usage of eval, while %2$s allows inline scripts.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
             /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
@@ -73,7 +74,6 @@ class Settings {
             'img-src' => esc_html__('Allowed sources for images (including favicons).', 'csp-manager'),
             'media-src' => esc_html__('Allowed audio/video sources.', 'csp-manager'),
             'font-src' => esc_html__('Allowed web font file sources.', 'csp-manager'),
-            'connect-src' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
             'frame-src' => esc_html__('Allowed sources for frame elements.', 'csp-manager'),
             'manifest-src' => esc_html__('Allowed sources for web app manifests.', 'csp-manager'),
             /* translators: %s: <code>\'none\'</code> */
