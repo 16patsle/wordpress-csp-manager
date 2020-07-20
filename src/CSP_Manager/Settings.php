@@ -161,7 +161,8 @@ class Settings {
         );
         
         add_settings_field(
-			'csp_' . $name . '_mode',
+            'csp_' . $name . '_mode',
+            /* translators: %s: Translated version of either 'Admin Policy', 'Logged-in Policy' or 'Frontend Policy' */
 			sprintf(__('%s Mode', 'csp-manager'), $title),
 			function() use($name) {
 		        $this->csp_render_option_mode($name);
