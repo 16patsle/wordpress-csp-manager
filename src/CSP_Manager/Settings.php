@@ -283,6 +283,7 @@ class Settings {
 			    <form id="csp_settings" action='options.php' method='post' style='clear:both;'>
 			    	<?php
                     settings_fields('csp');
+                    submit_button();
 
                     global $wp_settings_sections;
                     
@@ -308,8 +309,6 @@ class Settings {
                         </details>
                         <?php
                     }
-
-			    	submit_button();
 			    	?>
 			    </form>
 		    </div>
