@@ -251,7 +251,7 @@ class Settings {
 	 *
 	 * @since 1.0.0
 	 */
-	public function csp_admin_menu(): void {
+    public function csp_admin_menu(): void {
 		$admin_page = add_options_page(
             'Content Security Policy Manager',
             'CSP Manager',
@@ -263,8 +263,30 @@ class Settings {
 			    <h2><?php esc_html_e('Content Security Policy Manager', 'csp-manager'); ?></h2>
 			    <form id="csp_settings" action='options.php' method='post' style='clear:both;'>
 			    	<?php
-			    	settings_fields('csp');
-			    	do_settings_sections('csp');
+                    settings_fields('csp');
+
+                    global $wp_settings_sections;
+                    
+                    foreach ( (array) $wp_settings_sections[ 'csp' ] as $section ) {
+                        ?>
+                        <details style="margin: 10px 0;">
+                            <summary><?php echo $section['title'] ?></summary>
+                            <h2><?php echo $section['title'] ?></h2>
+                            <?php
+                            call_user_func( $section['callback'], $section );
+                            ?>
+                            <table class="form-table" role="presentation">
+                            <?php
+                            do_settings_fields( 'csp', $section['id'] );
+                            ?>
+                            </table>
+                            <?php
+                            submit_button();
+                            ?>
+                        </details>
+                        <?php
+                    }
+
 			    	submit_button();
 			    	?>
 			    </form>
