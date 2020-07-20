@@ -25,7 +25,7 @@ class Settings {
 	 */
 	protected $defaults = [
 		'admin' => [
-            'mode' => 'disabled',
+            'mode' => 'report',
             'enable_default-src' => 1,
             'default-src' => '\'self\'',
         ],
@@ -268,8 +268,11 @@ class Settings {
                     global $wp_settings_sections;
                     
                     foreach ( (array) $wp_settings_sections[ 'csp' ] as $section ) {
+                        $option = get_option(str_replace('csp_', 'csp_manager_', $section['id']));
+                        $open = isset($option) && isset($option['mode']) && $option['mode'] !== 'disabled';
+                        
                         ?>
-                        <details style="margin: 10px 0;">
+                        <details style="margin: 10px 0;" <?php if($open) echo 'open'; ?>>
                             <summary><?php echo $section['title'] ?></summary>
                             <h2><?php echo $section['title'] ?></h2>
                             <?php
