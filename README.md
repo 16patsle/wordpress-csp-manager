@@ -32,6 +32,8 @@ Reporting can be enabled both in report only mode and in enforce mode. You can u
 
 ## Changelog
 
+This plugin's development happens in [the GitHub repo](https://github.com/16patsle/wordpress-csp-manager). 
+
 ### 1.0.0
 
 First version.
