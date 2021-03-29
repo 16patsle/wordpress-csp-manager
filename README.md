@@ -1,9 +1,10 @@
 # Content Security Policy Manager
+
 Contributors: 16patsle
 Tags: csp, content security policy, security, security headers, xss
 Requires at least: 4.6
 Requires PHP: 7.2
-Tested up to: 5.4
+Tested up to: 5.7
 Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: <http://www.gnu.org/licenses/gpl-3.0.html>
@@ -19,6 +20,7 @@ Please note that this plugin offers limited help in figuring out what the conten
 ## Frequently Asked Questions
 
 ### What is a Content Security Policy?
+
 To quote MDN:
 
 > Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
@@ -26,6 +28,7 @@ To quote MDN:
 > To enable CSP, you need to configure your web server to return the Content-Security-Policy HTTP header.
 
 ### How do I enable reporting?
+
 Reporting can be enabled by setting the report-uri and/or report-to directives. You will need the URL to a server that can handle these kinds of reports, which there are several of. [Report URI ](https://report-uri.com/) is one example of such a service, they have a free tier that allows up to 10 000 reports per month (any more than that is just ignored, no extra cost). They also have a CSP wizard that can help you construct your policy.
 
 Reporting can be enabled both in report only mode and in enforce mode. You can use report-only mode to evaluate the contents of the policy by looking at which resources are reported as blocked.
