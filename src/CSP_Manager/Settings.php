@@ -121,11 +121,11 @@ class Settings {
             ],
             'report-uri' => [
                 'description' => esc_html__('URL to send a report to when policy violations happen. Prefer usage of report-to instead, this directive should only be used for compatibility purposes.', 'csp-manager'),
-                'category' => 'general',
+                'category' => 'reporting',
             ],
             'report-to' => [
                 'description' => esc_html__('Reporting group name to send violation reports to. Used together with the Report-To header, which defines these report groups and where to send the reports.', 'csp-manager'),
-                'category' => 'general',
+                'category' => 'reporting',
             ],
             'require-trusted-types-for' => [
                 /* translators: %s: <code>'script'</code> */
@@ -181,6 +181,10 @@ class Settings {
                 'title' => 'Resource directives',
                 'description' => esc_html__('CSP directives that control allowed URLs for loading of resources.', 'csp-manager')
             ],
+            'reporting' => [
+                'title' => 'Reporting directives',
+                'description' => esc_html__('CSP directives that control reporting of policy violations.', 'csp-manager')
+            ]
         ];
 
         $this->options = [
@@ -295,7 +299,7 @@ class Settings {
                 <?php
             },
 			'csp',
-			'csp_' . $name . '_general',
+			'csp_' . $name . '_reporting',
         );
     }
 
