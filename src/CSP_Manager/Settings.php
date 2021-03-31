@@ -109,6 +109,10 @@ class Settings {
                 'description' => esc_html__('Allowed audio/video sources.', 'csp-manager'),
                 'category' => 'resources',
             ],
+            'navigate-to' => [
+                'description' => esc_html__('Restrict where the site can initiate navigation to.', 'csp-manager'),
+                'category' => 'general',
+            ],
             'object-src' => [
                 /* translators: %s: <code>'none'</code> */
                 'description' => sprintf(esc_html__('Allowed sources for Flash content, Java applets or other content loaded using object, embed or applet tags. Recommended to set to %s if you\'re not using these types of content.', 'csp-manager'), '<code>\'none\'</code>'),
@@ -130,6 +134,10 @@ class Settings {
             'require-trusted-types-for' => [
                 /* translators: %s: <code>'script'</code> */
                 'description' => sprintf(esc_html__('When used with the value %s, Trusted Types will be required for various DOM functions. Helps prevent XSS vulnerabilities.', 'csp-manager'), '<code>\'script\'</code>'),
+                'category' => 'general',
+            ],
+            'sandbox' => [
+                'description' => esc_html__('Applies sandbox restrictions to the page, with the exception of specified allowed features.', 'csp-manager'),
                 'category' => 'general',
             ],
             'script-src' => [
