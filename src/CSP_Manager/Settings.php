@@ -401,7 +401,7 @@ class Settings {
             ?>
 		    <div class="wrap">
 			    <h2><?php esc_html_e('Content Security Policy Manager', 'csp-manager'); ?></h2>
-			    <form id="csp_settings" action='options.php' method='post' style='clear:both;'>
+			    <form id="csp_settings" action="options.php" method="post">
 			    	<?php
                     settings_fields('csp');
                     submit_button();
@@ -412,7 +412,7 @@ class Settings {
                         // Matches the section csp_manager_admin, but not csp_manager_admin_general.
                         if (preg_match('/csp_[a-z]+$/', $section['id'])) {
                             ?>
-                            <h2 style="font-size: 1.6em;"><?php echo $section['title'] ?></h2>
+                            <h2 class="section-header"><?php echo $section['title'] ?></h2>
                             <?php
                             call_user_func( $section['callback'], $section );
                             ?>
@@ -445,9 +445,9 @@ class Settings {
      */
     public function csp_render_option_category(array $section): void {
         ?>
-        <details style="margin: 15px 0;">
-            <summary style="margin: 1em 0;">
-                <h3 style="display: inline;"><?php echo $section['title'] ?></h3>
+        <details class="section-category">
+            <summary>
+                <h3><?php echo $section['title'] ?></h3>
             </summary>
             <?php
             call_user_func( $section['callback'], $section );

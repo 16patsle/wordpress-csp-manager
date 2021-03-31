@@ -1,0 +1,16 @@
+#csp_settings {
+  clear: both;
+}
+
+#csp_settings .section-header {
+  font-size: 1.6em;
+  margin-bottom: 0.6em;
+}
+
+#csp_settings .section-category, #csp_settings .section-category summary {
+  margin: 1em 0;
+}
+
+#csp_settings .section-category summary h3 {
+  display: inline;
+}
