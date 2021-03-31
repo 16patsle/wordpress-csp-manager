@@ -94,6 +94,10 @@ class Settings {
                 'description' => esc_html__('Fallback for the src directives.', 'csp-manager'),
                 'category' => 'resources',
             ],
+            'child-src' => [
+                'description' => esc_html__('Allowed sources for frame elements, web workers and service workers. Combination of frame-src and worker-src.', 'csp-manager'),
+                'category' => 'resources',
+            ],
             'connect-src' => [
                 'description' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
                 'category' => 'resources',
