@@ -171,11 +171,11 @@ class Settings {
         $this->categories = [
             'general' => [
                 'title' => 'General directives',
-                'description' => esc_html__('TODO', 'csp-manager')
+                'description' => esc_html__('Various general CSP directives.', 'csp-manager')
             ],
             'resources' => [
                 'title' => 'Resource directives',
-                'description' => esc_html__('TODO', 'csp-manager')
+                'description' => esc_html__('CSP directives that control allowed URLs for loading of resources.', 'csp-manager')
             ],
         ];
 
@@ -401,7 +401,7 @@ class Settings {
                         } else {
                             ?>
                             <details style="margin: 15px 0;">
-                                <summary>
+                                <summary style="margin: 1em 0;">
                                     <h3 style="display: inline;"><?php echo $section['title'] ?></h3>
                                 </summary>
                                 <?php
