@@ -339,7 +339,7 @@ class Settings {
 		        	</label>
                     <br>
                     <label>
-                        <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2"><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
+                        <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2" <?php if ($this->get_directive_enabled_option($option, $directive) !== 1) echo 'disabled'; ?>><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
 		            	<p class="description">
 		            	    <?php echo $description; ?>
 		                </p>
