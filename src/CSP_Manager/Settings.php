@@ -65,10 +65,10 @@ class Settings {
 	 */
 	public function __construct(string $pluginfile) {
         $this->directives = [
-            'base-uri' => esc_html__('restricts the URLs which can be used in a base element', 'csp-manager'),
-            'frame-ancestors' => esc_html__('prevent Clickjacking attacks', 'csp-manager'),
-            'upgrade-insecure-requests' => esc_html__('use https', 'csp-manager'),
-            'form-action' => esc_html__('restrict the use of forms', 'csp-manager'),
+            'base-uri' => esc_html__('Allowed URLs for the base element, which sets the base URL used to resolve relative URLs.', 'csp-manager'),
+            'frame-ancestors' => esc_html__('Which sources can embed the page in a frame. Restricting this can prevent clickjacking attacks.', 'csp-manager'),
+            'upgrade-insecure-requests' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager'),
+            'form-action' => esc_html__('Allowed targets for form submission.', 'csp-manager'),
             'default-src' => esc_html__('Fallback for the src directives.', 'csp-manager'),
             'connect-src' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
             /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
