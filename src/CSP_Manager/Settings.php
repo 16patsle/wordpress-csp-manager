@@ -430,6 +430,8 @@ class Settings {
                             }
                         }
                     }
+
+                    submit_button();
 			    	?>
 			    </form>
 		    </div>
@@ -457,9 +459,6 @@ class Settings {
             do_settings_fields( 'csp', $section['id'] );
             ?>
             </table>
-            <?php
-            submit_button();
-            ?>
         </details>
         <?php
     }
