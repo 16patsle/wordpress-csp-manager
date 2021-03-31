@@ -144,6 +144,17 @@ class Settings {
             ],
         ];
 
+        $this->categories = [
+            'general' => [
+                'title' => 'General directives',
+                'description' => esc_html__('TODO', 'csp-manager')
+            ],
+            'resources' => [
+                'title' => 'Resource directives',
+                'description' => esc_html__('TODO', 'csp-manager')
+            ],
+        ];
+
         $this->options = [
             'admin' => get_option('csp_manager_admin'),
             'loggedin' => get_option('csp_manager_loggedin'),
@@ -223,8 +234,19 @@ class Settings {
 		        $this->csp_render_option_mode($name);
             },
 			'csp',
-			'csp_' . $name
+			'csp_' . $name . '_general',
         );
+
+        foreach ($this->categories as $category => $category_object) {
+            add_settings_section(
+                'csp_' . $name . '_' . $category,
+                $category_object['title'],
+                function() use($category_object) {
+                    echo esc_html($category_object['description']);
+                },
+                'csp'
+            );
+        }
 
         foreach ($this->directives as $directive => $directive_object) {
             $this->csp_add_directive_setting($name, $directive, $directive_object);
@@ -245,7 +267,7 @@ class Settings {
                 <?php
             },
 			'csp',
-			'csp_' . $name
+			'csp_' . $name . '_general',
         );
     }
 
@@ -262,6 +284,7 @@ class Settings {
         $policy_string = __('Policy: %s', 'csp-manager');
 
         $description = $directive_object['description'];
+        $category = !empty($directive_object['category']) ? $directive_object['category'] : 'general';
 
         add_settings_field(
 			'csp_' . $option . '_' . $directive,
@@ -284,7 +307,7 @@ class Settings {
 		        <?php
             },
 			'csp',
-			'csp_' . $option
+			'csp_' . $option . '_' . $category
         );
     }
 
@@ -345,26 +368,33 @@ class Settings {
                     global $wp_settings_sections;
                     
                     foreach ( (array) $wp_settings_sections[ 'csp' ] as $section ) {
-                        $option = get_option(str_replace('csp_', 'csp_manager_', $section['id']));
-                        $open = isset($option) && isset($option['mode']) && $option['mode'] !== 'disabled';
-                        
-                        ?>
-                        <details style="margin: 10px 0;" <?php if($open) echo 'open'; ?>>
-                            <summary><?php echo $section['title'] ?></summary>
-                            <h2><?php echo $section['title'] ?></h2>
+                        // Matches the section csp_manager_admin, but not csp_manager_admin_general.
+                        if (preg_match('/csp_[a-z]+$/', $section['id'])) {
+                            ?>
+                            <h2 style="font-size: 1.6em;"><?php echo $section['title'] ?></h2>
                             <?php
                             call_user_func( $section['callback'], $section );
+                        } else {
                             ?>
-                            <table class="form-table" role="presentation">
+                            <details style="margin: 15px 0;">
+                                <summary>
+                                    <h3 style="display: inline;"><?php echo $section['title'] ?></h3>
+                                </summary>
+                                <?php
+                                call_user_func( $section['callback'], $section );
+                                ?>
+                                <table class="form-table" role="presentation">
+                                <?php
+                                do_settings_fields( 'csp', $section['id'] );
+                                ?>
+                                </table>
+                                <?php
+                                submit_button();
+                                ?>
+                            </details>
                             <?php
-                            do_settings_fields( 'csp', $section['id'] );
-                            ?>
-                            </table>
-                            <?php
-                            submit_button();
-                            ?>
-                        </details>
-                        <?php
+                        }
+                        
                     }
 			    	?>
 			    </form>
