@@ -65,35 +65,83 @@ class Settings {
 	 */
 	public function __construct(string $pluginfile) {
         $this->directives = [
-            'base-uri' => esc_html__('Allowed URLs for the base element, which sets the base URL used to resolve relative URLs.', 'csp-manager'),
-            'frame-ancestors' => esc_html__('Which sources can embed the page in a frame. Restricting this can prevent clickjacking attacks.', 'csp-manager'),
-            'upgrade-insecure-requests' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager'),
-            'form-action' => esc_html__('Allowed targets for form submission.', 'csp-manager'),
-            'trusted-types' => esc_html__('Restrict creation of Trusted Types policies. Used together with require-trusted-types-for.', 'csp-manager'),
-            /* translators: %s: <code>'script'</code> */
-            'require-trusted-types-for' => sprintf(esc_html__('When used with the value %s, Trusted Types will be required for various DOM functions. Helps prevent XSS vulnerabilities.', 'csp-manager'), '<code>\'script\'</code>'),
-            'default-src' => esc_html__('Fallback for the src directives.', 'csp-manager'),
-            'connect-src' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
-            /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
-            'script-src' => sprintf(esc_html__('Allowed JavaScript sources. %1$s allows usage of eval, while %2$s allows inline scripts.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
-            /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
-            'style-src' => sprintf(esc_html__('Allowed style sources. %1$s allows usage of eval, while %2$s allows inline styles.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
-            'img-src' => esc_html__('Allowed sources for images (including favicons).', 'csp-manager'),
-            'media-src' => esc_html__('Allowed audio/video sources.', 'csp-manager'),
-            'font-src' => esc_html__('Allowed web font file sources.', 'csp-manager'),
-            'frame-src' => esc_html__('Allowed sources for frame elements.', 'csp-manager'),
-            'manifest-src' => esc_html__('Allowed sources for web app manifests.', 'csp-manager'),
-            /* translators: %s: <code>'none'</code> */
-            'object-src' => sprintf(esc_html__('Allowed sources for Flash content, Java applets or other content loaded using object, embed or applet tags. Recommended to set to %s if you\'re not using these types of content.', 'csp-manager'), '<code>\'none\'</code>'),
-            /* translators: 1: <code>&lt;link rel="prefetch"&gt;</code> 2: <code>&lt;link rel="prerender"&gt;</code> */
-            'prefetch-src' => sprintf(esc_html__('Allowed sources in %1$s and %2$s elements.', 'csp-manager'), '<code>&lt;link rel="prefetch"&gt;</code>', '<code>&lt;link rel="prerender"&gt;</code>'),
-            'script-src-elem' => esc_html__('Allowed sources for script elements, falls back to script-src if missing.', 'csp-manager'),
-            'script-src-attr' => esc_html__('Allowed inline event handler sources, falls back to script-src if missing.', 'csp-manager'),
-            'style-src-elem' => esc_html__('Allowed sources for style and stylesheet link elements, falls back to style-src if missing.', 'csp-manager'),
-            'style-src-attr' => esc_html__('Allowed inline style sources, falls back to style-src if missing.', 'csp-manager'),
-            'worker-src' => esc_html__('Allowed sources for web workers and service workers.', 'csp-manager'),
-            'report-uri' => esc_html__('URL to send a report to when policy violations happen. Prefer usage of report-to instead, this directive should only be used for compatibility purposes.', 'csp-manager'),
-            'report-to' => esc_html__('Reporting group name to send violation reports to. Used together with the Report-To header, which defines these report groups and where to send the reports.', 'csp-manager'),
+            'base-uri' => [
+                'description' => esc_html__('Allowed URLs for the base element, which sets the base URL used to resolve relative URLs.', 'csp-manager'),
+            ],
+            'frame-ancestors' => [
+                'description' => esc_html__('Which sources can embed the page in a frame. Restricting this can prevent clickjacking attacks.', 'csp-manager'),
+            ],
+            'upgrade-insecure-requests' => [
+                'description' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager'),
+            ],
+            'form-action' => [
+                'description' => esc_html__('Allowed targets for form submission.', 'csp-manager'),
+            ],
+            'trusted-types' => [
+                'description' => esc_html__('Restrict creation of Trusted Types policies. Used together with require-trusted-types-for.', 'csp-manager'),
+            ],
+            'require-trusted-types-for' => [
+                /* translators: %s: <code>'script'</code> */
+                'description' => sprintf(esc_html__('When used with the value %s, Trusted Types will be required for various DOM functions. Helps prevent XSS vulnerabilities.', 'csp-manager'), '<code>\'script\'</code>'),
+            ],
+            'default-src' => [
+                'description' => esc_html__('Fallback for the src directives.', 'csp-manager'),
+            ],
+            'connect-src' => [
+                'description' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
+            ],
+            'script-src' => [
+                /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
+                'description' => sprintf(esc_html__('Allowed JavaScript sources. %1$s allows usage of eval, while %2$s allows inline scripts.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
+            ],
+            'style-src' => [
+                /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
+                'description' => sprintf(esc_html__('Allowed style sources. %1$s allows usage of eval, while %2$s allows inline styles.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
+            ],
+            'img-src' => [
+                'description' => esc_html__('Allowed sources for images (including favicons).', 'csp-manager'),
+            ],
+            'media-src' => [
+                'description' => esc_html__('Allowed audio/video sources.', 'csp-manager'),
+            ],
+            'font-src' => [
+                'description' => esc_html__('Allowed web font file sources.', 'csp-manager'),
+            ],
+            'frame-src' => [
+                'description' => esc_html__('Allowed sources for frame elements.', 'csp-manager'),
+            ],
+            'manifest-src' => [
+                'description' => esc_html__('Allowed sources for web app manifests.', 'csp-manager'),
+            ],
+            'object-src' => [
+                /* translators: %s: <code>'none'</code> */
+                'description' => sprintf(esc_html__('Allowed sources for Flash content, Java applets or other content loaded using object, embed or applet tags. Recommended to set to %s if you\'re not using these types of content.', 'csp-manager'), '<code>\'none\'</code>'),
+            ],
+            'prefetch-src' => [
+                /* translators: 1: <code>&lt;link rel="prefetch"&gt;</code> 2: <code>&lt;link rel="prerender"&gt;</code> */
+                'description' => sprintf(esc_html__('Allowed sources in %1$s and %2$s elements.', 'csp-manager'), '<code>&lt;link rel="prefetch"&gt;</code>', '<code>&lt;link rel="prerender"&gt;</code>'),
+            ],
+            'script-src-elem' => [
+                'description' => esc_html__('Allowed sources for script elements, falls back to script-src if missing.', 'csp-manager'),
+            ],
+            'script-src-attr' => [
+                'description' => esc_html__('Allowed inline event handler sources, falls back to script-src if missing.', 'csp-manager'),
+            ],
+            'style-src-elem' => [
+                'description' => esc_html__('Allowed sources for style and stylesheet link elements, falls back to style-src if missing.', 'csp-manager'),
+            ],
+            'style-src-attr' => [
+                'description' => esc_html__('Allowed inline style sources, falls back to style-src if missing.', 'csp-manager'),
+            ],
+            'worker-src' => [
+                'description' => esc_html__('Allowed sources for web workers and service workers.', 'csp-manager'),
+            ],
+            'report-uri' => [
+                'description' => esc_html__('URL to send a report to when policy violations happen. Prefer usage of report-to instead, this directive should only be used for compatibility purposes.', 'csp-manager'),
+            ],
+            'report-to' => [
+                'description' => esc_html__('Reporting group name to send violation reports to. Used together with the Report-To header, which defines these report groups and where to send the reports.', 'csp-manager'),
+            ],
         ];
 
         $this->options = [
@@ -178,8 +226,8 @@ class Settings {
 			'csp_' . $name
         );
 
-        foreach ($this->directives as $directive => $description) {
-            $this->csp_add_directive_setting($name, $directive, $description);
+        foreach ($this->directives as $directive => $directive_object) {
+            $this->csp_add_directive_setting($name, $directive, $directive_object);
         }
 
         add_settings_field(
@@ -207,11 +255,13 @@ class Settings {
      * @since 1.0.0
      * @param string $option Current internal option, either 'admin', 'loggedin' or 'frontend'.
      * @param string $directive The CSP directive to create textbox for.
-     * @param string $description Description for the directive's text area, HTML escaped if necessary.
+     * @param array $directive_object Array with related data such as description for the directive's text area, HTML escaped if necessary.
      */
-    public function csp_add_directive_setting(string $option, string $directive, string $description): void {
+    public function csp_add_directive_setting(string $option, string $directive, array $directive_object): void {
         /* translators: %s: A CSP directive like 'default-src' */
         $policy_string = __('Policy: %s', 'csp-manager');
+
+        $description = $directive_object['description'];
 
         add_settings_field(
 			'csp_' . $option . '_' . $directive,
