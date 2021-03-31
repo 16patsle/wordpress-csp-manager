@@ -203,6 +203,7 @@ class Settings {
 
 		add_action('admin_init', [$this, 'csp_settings_init']);
         add_action('admin_menu', [$this, 'csp_admin_menu']);
+        add_action('admin_enqueue_scripts', [$this, 'csp_scripts_styles']);
         // If this is the first time we've enabled the plugin, setup default settings.
 		register_activation_hook($pluginfile, [$this, 'first_time_activation']);
     }
@@ -493,5 +494,21 @@ class Settings {
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Enqueue admin scripts and styles.
+     * 
+     * @since 1.1.0
+     * @param string $hook The current admin page.
+     */
+    public function csp_scripts_styles(string $hook): void {
+        if ($hook != 'settings_page_csp-manager') {
+            return;
+        }
+        $ver = '1.1.0';
+        
+        wp_enqueue_script('csp_admin_js', plugins_url( '../../js/admin.js',  __FILE__ ), [], $ver);
+        wp_enqueue_style('csp_admin_css', plugins_url( '../../css/admin.css',  __FILE__ ), [], $ver);
     }
 }
