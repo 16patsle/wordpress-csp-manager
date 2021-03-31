@@ -69,6 +69,9 @@ class Settings {
             'frame-ancestors' => esc_html__('Which sources can embed the page in a frame. Restricting this can prevent clickjacking attacks.', 'csp-manager'),
             'upgrade-insecure-requests' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager'),
             'form-action' => esc_html__('Allowed targets for form submission.', 'csp-manager'),
+            'trusted-types' => esc_html__('Restrict creation of Trusted Types policies. Used together with require-trusted-types-for.', 'csp-manager'),
+            /* translators: %s: <code>'script'</code> */
+            'require-trusted-types-for' => sprintf(esc_html__('When used with the value %s, Trusted Types will be required for various DOM functions. Helps prevent XSS vulnerabilities.', 'csp-manager'), '<code>\'script\'</code>'),
             'default-src' => esc_html__('Fallback for the src directives.', 'csp-manager'),
             'connect-src' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
             /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
