@@ -74,18 +74,18 @@ class Settings {
             'require-trusted-types-for' => sprintf(esc_html__('When used with the value %s, Trusted Types will be required for various DOM functions. Helps prevent XSS vulnerabilities.', 'csp-manager'), '<code>\'script\'</code>'),
             'default-src' => esc_html__('Fallback for the src directives.', 'csp-manager'),
             'connect-src' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
-            /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
+            /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
             'script-src' => sprintf(esc_html__('Allowed JavaScript sources. %1$s allows usage of eval, while %2$s allows inline scripts.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
-            /* translators: 1: <code>'unsafe-eval'</code> 2: 1: <code>'unsafe-inline'</code> */
+            /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
             'style-src' => sprintf(esc_html__('Allowed style sources. %1$s allows usage of eval, while %2$s allows inline styles.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
             'img-src' => esc_html__('Allowed sources for images (including favicons).', 'csp-manager'),
             'media-src' => esc_html__('Allowed audio/video sources.', 'csp-manager'),
             'font-src' => esc_html__('Allowed web font file sources.', 'csp-manager'),
             'frame-src' => esc_html__('Allowed sources for frame elements.', 'csp-manager'),
             'manifest-src' => esc_html__('Allowed sources for web app manifests.', 'csp-manager'),
-            /* translators: %s: <code>\'none\'</code> */
+            /* translators: %s: <code>'none'</code> */
             'object-src' => sprintf(esc_html__('Allowed sources for Flash content, Java applets or other content loaded using object, embed or applet tags. Recommended to set to %s if you\'re not using these types of content.', 'csp-manager'), '<code>\'none\'</code>'),
-            /* translators: 1: <code>&lt;link rel="prefetch"&gt;</code> 2: 1: <code>&lt;link rel="prerender"&gt;</code> */
+            /* translators: 1: <code>&lt;link rel="prefetch"&gt;</code> 2: <code>&lt;link rel="prerender"&gt;</code> */
             'prefetch-src' => sprintf(esc_html__('Allowed sources in %1$s and %2$s elements.', 'csp-manager'), '<code>&lt;link rel="prefetch"&gt;</code>', '<code>&lt;link rel="prerender"&gt;</code>'),
             'script-src-elem' => esc_html__('Allowed sources for script elements, falls back to script-src if missing.', 'csp-manager'),
             'script-src-attr' => esc_html__('Allowed inline event handler sources, falls back to script-src if missing.', 'csp-manager'),
