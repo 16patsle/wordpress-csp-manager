@@ -274,7 +274,7 @@ class Settings {
 		        $this->csp_render_option_mode($name);
             },
 			'csp',
-			'csp_' . $name . '_general',
+			'csp_' . $name,
         );
 
         foreach ($this->categories as $category => $category_object) {
@@ -414,6 +414,13 @@ class Settings {
                             <h2 style="font-size: 1.6em;"><?php echo $section['title'] ?></h2>
                             <?php
                             call_user_func( $section['callback'], $section );
+                            ?>
+                            <table class="form-table" role="presentation">
+                            <?php
+                            do_settings_fields( 'csp', $section['id'] );
+                            ?>
+                            </table>
+                            <?php
                             foreach (array_filter($wp_settings_sections[ 'csp' ], function($cat) use($section) {
                                 // Render the category sections belonging to this category.
                                 return strpos($cat['id'], $section['id']) === 0 && strlen($cat['id']) > strlen($section['id']);
