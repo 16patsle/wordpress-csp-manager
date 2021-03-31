@@ -507,7 +507,7 @@ class Settings {
         }
         $ver = '1.1.0';
         
-        wp_enqueue_script('csp_admin_js', plugins_url( '../../js/admin.js',  __FILE__ ), [], $ver);
+        wp_enqueue_script('csp_admin_js', plugins_url( '../../js/admin.js',  __FILE__ ), [], $ver, true);
         wp_enqueue_style('csp_admin_css', plugins_url( '../../css/admin.css',  __FILE__ ), [], $ver);
     }
 }
