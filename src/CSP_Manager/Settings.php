@@ -67,80 +67,104 @@ class Settings {
         $this->directives = [
             'base-uri' => [
                 'description' => esc_html__('Allowed URLs for the base element, which sets the base URL used to resolve relative URLs.', 'csp-manager'),
+                'category' => 'general',
             ],
             'frame-ancestors' => [
                 'description' => esc_html__('Which sources can embed the page in a frame. Restricting this can prevent clickjacking attacks.', 'csp-manager'),
+                'category' => 'general',
             ],
             'upgrade-insecure-requests' => [
                 'description' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager'),
+                'category' => 'general',
             ],
             'form-action' => [
                 'description' => esc_html__('Allowed targets for form submission.', 'csp-manager'),
+                'category' => 'general',
             ],
             'trusted-types' => [
                 'description' => esc_html__('Restrict creation of Trusted Types policies. Used together with require-trusted-types-for.', 'csp-manager'),
+                'category' => 'general',
             ],
             'require-trusted-types-for' => [
                 /* translators: %s: <code>'script'</code> */
                 'description' => sprintf(esc_html__('When used with the value %s, Trusted Types will be required for various DOM functions. Helps prevent XSS vulnerabilities.', 'csp-manager'), '<code>\'script\'</code>'),
+                'category' => 'general',
             ],
             'default-src' => [
                 'description' => esc_html__('Fallback for the src directives.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'connect-src' => [
                 'description' => esc_html__('Allowed URLs for fetch/XMLHttpRequest, WebSocket etc.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'script-src' => [
                 /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
                 'description' => sprintf(esc_html__('Allowed JavaScript sources. %1$s allows usage of eval, while %2$s allows inline scripts.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
+                'category' => 'resources',
             ],
             'style-src' => [
                 /* translators: 1: <code>'unsafe-eval'</code> 2: <code>'unsafe-inline'</code> */
                 'description' => sprintf(esc_html__('Allowed style sources. %1$s allows usage of eval, while %2$s allows inline styles.', 'csp-manager'), '<code>\'unsafe-eval\'</code>', '<code>\'unsafe-inline\'</code>'),
+                'category' => 'resources',
             ],
             'img-src' => [
                 'description' => esc_html__('Allowed sources for images (including favicons).', 'csp-manager'),
+                'category' => 'resources',
             ],
             'media-src' => [
                 'description' => esc_html__('Allowed audio/video sources.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'font-src' => [
                 'description' => esc_html__('Allowed web font file sources.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'frame-src' => [
                 'description' => esc_html__('Allowed sources for frame elements.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'manifest-src' => [
                 'description' => esc_html__('Allowed sources for web app manifests.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'object-src' => [
                 /* translators: %s: <code>'none'</code> */
                 'description' => sprintf(esc_html__('Allowed sources for Flash content, Java applets or other content loaded using object, embed or applet tags. Recommended to set to %s if you\'re not using these types of content.', 'csp-manager'), '<code>\'none\'</code>'),
+                'category' => 'resources',
             ],
             'prefetch-src' => [
                 /* translators: 1: <code>&lt;link rel="prefetch"&gt;</code> 2: <code>&lt;link rel="prerender"&gt;</code> */
                 'description' => sprintf(esc_html__('Allowed sources in %1$s and %2$s elements.', 'csp-manager'), '<code>&lt;link rel="prefetch"&gt;</code>', '<code>&lt;link rel="prerender"&gt;</code>'),
+                'category' => 'resources',
             ],
             'script-src-elem' => [
                 'description' => esc_html__('Allowed sources for script elements, falls back to script-src if missing.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'script-src-attr' => [
                 'description' => esc_html__('Allowed inline event handler sources, falls back to script-src if missing.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'style-src-elem' => [
                 'description' => esc_html__('Allowed sources for style and stylesheet link elements, falls back to style-src if missing.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'style-src-attr' => [
                 'description' => esc_html__('Allowed inline style sources, falls back to style-src if missing.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'worker-src' => [
                 'description' => esc_html__('Allowed sources for web workers and service workers.', 'csp-manager'),
+                'category' => 'resources',
             ],
             'report-uri' => [
                 'description' => esc_html__('URL to send a report to when policy violations happen. Prefer usage of report-to instead, this directive should only be used for compatibility purposes.', 'csp-manager'),
+                'category' => 'general',
             ],
             'report-to' => [
                 'description' => esc_html__('Reporting group name to send violation reports to. Used together with the Report-To header, which defines these report groups and where to send the reports.', 'csp-manager'),
+                'category' => 'general',
             ],
         ];
 
