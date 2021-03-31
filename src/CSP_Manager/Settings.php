@@ -398,33 +398,46 @@ class Settings {
                             <h2 style="font-size: 1.6em;"><?php echo $section['title'] ?></h2>
                             <?php
                             call_user_func( $section['callback'], $section );
-                        } else {
-                            ?>
-                            <details style="margin: 15px 0;">
-                                <summary style="margin: 1em 0;">
-                                    <h3 style="display: inline;"><?php echo $section['title'] ?></h3>
-                                </summary>
-                                <?php
-                                call_user_func( $section['callback'], $section );
-                                ?>
-                                <table class="form-table" role="presentation">
-                                <?php
-                                do_settings_fields( 'csp', $section['id'] );
-                                ?>
-                                </table>
-                                <?php
-                                submit_button();
-                                ?>
-                            </details>
-                            <?php
+                            foreach (array_filter($wp_settings_sections[ 'csp' ], function($cat) use($section) {
+                                // Render the category sections belonging to this category.
+                                return strpos($cat['id'], $section['id']) === 0 && strlen($cat['id']) > strlen($section['id']);
+                            }) as $cat_section) {
+                                $this->csp_render_option_category($cat_section);
+                            }
                         }
-                        
                     }
 			    	?>
 			    </form>
 		    </div>
 		    <?php
         } );
+    }
+
+    /**
+     * Display an option category.
+     * 
+     * @since 1.1.0
+     * @param array $section The section object for the category 
+     */
+    public function csp_render_option_category(array $section): void {
+        ?>
+        <details style="margin: 15px 0;">
+            <summary style="margin: 1em 0;">
+                <h3 style="display: inline;"><?php echo $section['title'] ?></h3>
+            </summary>
+            <?php
+            call_user_func( $section['callback'], $section );
+            ?>
+            <table class="form-table" role="presentation">
+            <?php
+            do_settings_fields( 'csp', $section['id'] );
+            ?>
+            </table>
+            <?php
+            submit_button();
+            ?>
+        </details>
+        <?php
     }
 
     /**
