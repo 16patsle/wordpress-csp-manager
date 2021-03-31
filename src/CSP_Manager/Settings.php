@@ -377,7 +377,7 @@ class Settings {
         <br>
         <label>
             <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'disabled', true); ?> value="disabled">
-            <?php esc_html_e('Disabled.', 'csp-manager'); ?>
+            <?php esc_html_e('Disabled', 'csp-manager'); ?>
             <p class="description">
             <?php esc_html_e('Don\'t add a CSP header.', 'csp-manager'); ?>
 		    </p>
