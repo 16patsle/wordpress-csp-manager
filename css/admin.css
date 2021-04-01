@@ -2,6 +2,10 @@
   clear: both;
 }
 
+#csp_settings [hidden] {
+  display: none;
+}
+
 #csp_settings .section-header {
   font-size: 1.6em;
   margin-bottom: 0.6em;

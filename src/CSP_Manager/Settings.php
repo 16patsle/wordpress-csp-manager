@@ -179,6 +179,7 @@ class Settings {
                 'description' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager')
                 . ($https_unsupported ? '<br>' . esc_html__('WARNING: Your site may not support HTTPS.', 'csp-manager') : ''),
                 'category' => 'general',
+                'type' => 'toggle',
             ],
             'worker-src' => [
                 'description' => esc_html__('Allowed sources for web workers and service workers.', 'csp-manager'),
@@ -332,19 +333,25 @@ class Settings {
 
         $description = $directive_object['description'];
         $category = !empty($directive_object['category']) ? $directive_object['category'] : 'general';
+        $is_toggle = !empty($directive_object['type']) && $directive_object['type'] === 'toggle';
 
         add_settings_field(
 			'csp_' . $option . '_' . $directive,
 			sprintf($policy_string, $directive),
-			function() use($option, $directive, $description) {
+			function() use($option, $directive, $description, $is_toggle) {
 		        ?>
 		        <fieldset>
                     <label>
 		        		<input type="checkbox" name="csp_manager_<?php echo $option; ?>[enable_<?php echo $directive; ?>]" <?php checked($this->get_directive_enabled_option($option, $directive), 1, true); ?> value="1">
 		        		<?php esc_html_e( 'Enable', 'csp-manager' ); ?>
+                        <?php if ($is_toggle) { ?>
+                        <p class="description">
+		            	    <?php echo $description; ?>
+		                </p>
+                        <?php } ?>
 		        	</label>
                     <br>
-                    <label>
+                    <label <?php if ($is_toggle) echo 'hidden'; ?>>
                         <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2" <?php if ($this->get_directive_enabled_option($option, $directive) !== 1) echo 'disabled'; ?>><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
 		            	<p class="description">
 		            	    <?php echo $description; ?>
