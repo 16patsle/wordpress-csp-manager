@@ -64,6 +64,11 @@ class Settings {
      * @param string $pluginfile __FILE__ path to the main plugin file.
 	 */
 	public function __construct(string $pluginfile) {
+        $https_unsupported = false;
+        if (function_exists('wp_is_https_supported')) {
+            $https_unsupported = !wp_is_https_supported();
+        }
+
         $this->directives = [
             'base-uri' => [
                 'description' => esc_html__('Allowed URLs for the base element, which sets the base URL used to resolve relative URLs.', 'csp-manager'),
@@ -171,7 +176,8 @@ class Settings {
                 'category' => 'general',
             ],
             'upgrade-insecure-requests' => [
-                'description' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager'),
+                'description' => esc_html__('Force the browser to use HTTPS for all resources, even regular HTTP URLs. Site must support HTTPS.', 'csp-manager')
+                . ($https_unsupported ? '<br>' . esc_html__('WARNING: Your site may not support HTTPS.', 'csp-manager') : ''),
                 'category' => 'general',
             ],
             'worker-src' => [
