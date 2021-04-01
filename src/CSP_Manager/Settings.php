@@ -412,22 +412,28 @@ class Settings {
                         // Matches the section csp_manager_admin, but not csp_manager_admin_general.
                         if (preg_match('/csp_[a-z]+$/', $section['id'])) {
                             ?>
-                            <h2 class="section-header"><?php echo $section['title'] ?></h2>
+                            <details>
+                                <summary>
+                                    <h2 class="section-header"><?php echo $section['title'] ?></h2>
+                                </summary>
+                                <?php
+                                call_user_func( $section['callback'], $section );
+                                ?>
+                                <table class="form-table" role="presentation">
+                                <?php
+                                do_settings_fields( 'csp', $section['id'] );
+                                ?>
+                                </table>
+                                <?php
+                                foreach (array_filter($wp_settings_sections[ 'csp' ], function($cat) use($section) {
+                                    // Render the category sections belonging to this category.
+                                    return strpos($cat['id'], $section['id']) === 0 && strlen($cat['id']) > strlen($section['id']);
+                                }) as $cat_section) {
+                                    $this->csp_render_option_category($cat_section);
+                                }
+                                ?>
+                            </details>
                             <?php
-                            call_user_func( $section['callback'], $section );
-                            ?>
-                            <table class="form-table" role="presentation">
-                            <?php
-                            do_settings_fields( 'csp', $section['id'] );
-                            ?>
-                            </table>
-                            <?php
-                            foreach (array_filter($wp_settings_sections[ 'csp' ], function($cat) use($section) {
-                                // Render the category sections belonging to this category.
-                                return strpos($cat['id'], $section['id']) === 0 && strlen($cat['id']) > strlen($section['id']);
-                            }) as $cat_section) {
-                                $this->csp_render_option_category($cat_section);
-                            }
                         }
                     }
 

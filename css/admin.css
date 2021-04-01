@@ -7,10 +7,14 @@
   margin-bottom: 0.6em;
 }
 
-#csp_settings .section-category, #csp_settings .section-category summary {
+#csp_settings details, #csp_settings summary {
   margin: 1em 0;
 }
 
-#csp_settings .section-category summary h3 {
+#csp_settings .section-category {
+  margin-left: 1em;
+}
+
+#csp_settings summary h3, #csp_settings summary h2 {
   display: inline;
 }
