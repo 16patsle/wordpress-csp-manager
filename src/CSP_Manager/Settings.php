@@ -411,8 +411,11 @@ class Settings {
                     foreach ( (array) $wp_settings_sections[ 'csp' ] as $section ) {
                         // Matches the section csp_manager_admin, but not csp_manager_admin_general.
                         if (preg_match('/csp_[a-z]+$/', $section['id'])) {
+                            $option = get_option(str_replace('csp_', 'csp_manager_', $section['id']));
+                            $open = isset($option) && isset($option['mode']) && $option['mode'] !== 'disabled';
+
                             ?>
-                            <details>
+                            <details <?php if($open) echo 'open'; ?>>
                                 <summary>
                                     <h2 class="section-header"><?php echo $section['title'] ?></h2>
                                 </summary>
