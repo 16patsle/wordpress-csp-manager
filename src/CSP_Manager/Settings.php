@@ -342,17 +342,31 @@ class Settings {
 		        ?>
 		        <fieldset>
                     <label>
-		        		<input type="checkbox" name="csp_manager_<?php echo $option; ?>[enable_<?php echo $directive; ?>]" <?php checked($this->get_directive_enabled_option($option, $directive), 1, true); ?> value="1">
-		        		<?php esc_html_e( 'Enable', 'csp-manager' ); ?>
-                        <?php if ($is_toggle) { ?>
-                        <p class="description">
-		            	    <?php echo $description; ?>
-		                </p>
-                        <?php } ?>
+		        		<input
+                            type="checkbox"
+                            name="csp_manager_<?php echo $option; ?>[enable_<?php echo $directive; ?>]"
+                            <?php checked($this->get_directive_enabled_option($option, $directive), 1, true); ?>
+                            value="1"
+                        >
+		        		<?php
+                        esc_html_e( 'Enable', 'csp-manager' );
+
+                        if ($is_toggle) {
+                            ?>
+                            <p class="description">
+		            	        <?php echo $description; ?>
+		                    </p>
+                            <?php
+                        }
+                        ?>
 		        	</label>
                     <br>
                     <label <?php if ($is_toggle) echo 'hidden'; ?>>
-                        <textarea name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]" cols="80" rows="2" <?php if ($this->get_directive_enabled_option($option, $directive) !== 1) echo 'disabled'; ?>><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
+                        <textarea
+                            name="csp_manager_<?php echo $option; ?>[<?php echo $directive; ?>]"
+                            cols="80" rows="2"
+                            <?php if ($this->get_directive_enabled_option($option, $directive) !== 1) echo 'disabled'; ?>
+                        ><?php echo $this->get_textarea_option($option, $directive); ?></textarea>
 		            	<p class="description">
 		            	    <?php echo $description; ?>
 		                </p>
@@ -374,7 +388,12 @@ class Settings {
     public function csp_render_option_mode(string $option): void {
         ?>
 		<label>
-            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'enforce', true); ?> value="enforce">
+            <input
+                type="radio"
+                name='csp_manager_<?php echo $option; ?>[mode]'
+                <?php checked(get_option('csp_manager_' . $option)['mode'], 'enforce', true); ?>
+                value="enforce"
+            >
             <?php esc_html_e('Enforce', 'csp-manager'); ?>
             <p class="description">
 			    <?php esc_html_e('Enforce the Content Security Policy.', 'csp-manager'); ?>
@@ -382,7 +401,12 @@ class Settings {
 		</label>
         <br>
         <label>
-            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'report', true); ?> value="report">
+            <input
+                type="radio"
+                name='csp_manager_<?php echo $option; ?>[mode]'
+                <?php checked(get_option('csp_manager_' . $option)['mode'], 'report', true); ?>
+                value="report"
+            >
             <?php esc_html_e('Report-Only', 'csp-manager'); ?>
             <p class="description">
             <?php esc_html_e('Don\'t enforce the policy, run it in Report-Only mode.', 'csp-manager'); ?>
@@ -390,7 +414,12 @@ class Settings {
 		</label>
         <br>
         <label>
-            <input type="radio" name='csp_manager_<?php echo $option; ?>[mode]' <?php checked(get_option('csp_manager_' . $option)['mode'], 'disabled', true); ?> value="disabled">
+            <input
+                type="radio"
+                name='csp_manager_<?php echo $option; ?>[mode]'
+                <?php checked(get_option('csp_manager_' . $option)['mode'], 'disabled', true); ?>
+                value="disabled"
+            >
             <?php esc_html_e('Disabled', 'csp-manager'); ?>
             <p class="description">
             <?php esc_html_e('Don\'t add a CSP header.', 'csp-manager'); ?>
