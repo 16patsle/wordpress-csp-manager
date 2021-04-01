@@ -24,18 +24,25 @@ Please note that this plugin offers limited help in figuring out what the conten
 To quote MDN:
 
 > Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
-
+>
 > To enable CSP, you need to configure your web server to return the Content-Security-Policy HTTP header.
 
 ### How do I enable reporting?
 
-Reporting can be enabled by setting the report-uri and/or report-to directives. You will need the URL to a server that can handle these kinds of reports, which there are several of. [Report URI ](https://report-uri.com/) is one example of such a service, they have a free tier that allows up to 10 000 reports per month (any more than that is just ignored, no extra cost). They also have a CSP wizard that can help you construct your policy.
+Reporting can be enabled by setting the report-uri and/or report-to directives. You will need the URL to a server that can handle these kinds of reports, which there are several of. [Report URI](https://report-uri.com/) is one example of such a service, they have a free tier that allows up to 10 000 reports per month (any more than that is just ignored, no extra cost). They also have a CSP wizard that can help you construct your policy.
 
 Reporting can be enabled both in report only mode and in enforce mode. You can use report-only mode to evaluate the contents of the policy by looking at which resources are reported as blocked.
 
 ## Changelog
 
 This plugin's development happens in [its GitHub repo](https://github.com/16patsle/wordpress-csp-manager). Feel free to send bug reports there.
+
+### 1.2.0
+
+- Improved UI, with CSP directives divided into collapsible categories.
+- Add all remaining non-deprecated CSP directives.
+- Warn if enabling upgrade-insecure-requests on a site that does not support HTTPS.
+- Various internal improvements.
 
 ### 1.1.0
 
