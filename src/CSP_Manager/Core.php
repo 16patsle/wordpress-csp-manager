@@ -69,6 +69,7 @@ class Core {
                 }
             }
 
+            // Prepare and set header, including removing newlines
             header(preg_replace('/\R/u', ' ', sprintf('%s: %s', $header, $content)));
 
             if(isset($option['header_reportto']) && !empty($option['header_reportto'])) {
