@@ -69,7 +69,7 @@ class Core {
                 }
             }
 
-            header(sprintf('%s: %s', $header, $content));
+            header(preg_replace('/\R/u', ' ', sprintf('%s: %s', $header, $content)));
 
             if(isset($option['header_reportto']) && !empty($option['header_reportto'])) {
                 header(sprintf('Report-To: %s', $option['header_reportto']));
