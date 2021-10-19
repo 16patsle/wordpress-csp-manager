@@ -578,11 +578,11 @@ class Settings {
         foreach ($new_value as $key => $value) {
             // If this is the option for a directive value, sanitize it.
             if($key != 'mode' || !(strpos($key, 'enable_') === 0) || (array_key_exists($this->directives[$key]) && !array_key_exists($this->directives[$key]['type']))) {
-                // Remove newlines
+                // Replace newlines with spaces
                 $sanitized_value = preg_replace('/\R/u', ' ', $value);
 
                 // Sanitize directive value as per https://www.w3.org/TR/CSP3/#framework-directives
-                $regex = '/[^\x21-\x2B\x2D-\x3A\x3C-\x7E\x7E\x09\x0A\x0C\x0D\x20]/u';
+                $regex = '/[^\x21-\x2B\x2D-\x3A\x3C-\x7E\x09\x20]/u';
                 $sanitized_value = preg_replace($regex, '', $sanitized_value);
 
                 $new_value[$key] = $sanitized_value;
