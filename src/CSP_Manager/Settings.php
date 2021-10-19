@@ -265,6 +265,9 @@ class Settings {
     public function csp_add_settings(string $name, string $title, string $description): void {
         register_setting('csp', 'csp_manager_' . $name);
 
+        // Add filter to sanitize option value
+        add_filter('pre_update_option_csp_manager_' . $name, [$this, 'pre_update_option']);
+
         add_settings_section(
 			'csp_' . $name,
 			$title,
@@ -560,5 +563,30 @@ class Settings {
         
         wp_enqueue_script('csp_admin_js', plugins_url( '../../js/admin.js',  __FILE__ ), [], $ver, true);
         wp_enqueue_style('csp_admin_css', plugins_url( '../../css/admin.css',  __FILE__ ), [], $ver);
+    }
+
+    /**
+     * Sanitize option values before saving.
+     * 
+     * @since 1.2.0
+     * @param array The new, unserialized option value.
+     * @return array The filtered option value.
+     */
+    public function pre_update_option(array $new_value): array {
+        foreach ($new_value as $key => $value) {
+            // If this is the option for a directive value, sanitize it.
+            if($key != 'mode' || !(strpos($key, 'enable_') === 0) || (array_key_exists($this->directives[$key]) && !array_key_exists($this->directives[$key]['type']))) {
+                // Replace newlines with spaces
+                $sanitized_value = preg_replace('/\R/u', ' ', $value);
+
+                // Sanitize directive value as per https://www.w3.org/TR/CSP3/#framework-directives
+                $regex = '/[^\x21-\x2B\x2D-\x3A\x3C-\x7E\x09\x20]/u';
+                $sanitized_value = preg_replace($regex, '', $sanitized_value);
+
+                $new_value[$key] = $sanitized_value;
+            }
+        }
+        
+        return $new_value;
     }
 }
