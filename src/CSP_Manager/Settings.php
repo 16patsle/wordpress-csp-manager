@@ -570,11 +570,9 @@ class Settings {
      * 
      * @since 1.2.0
      * @param array The new, unserialized option value.
-     * @param array $old_value The old option value.
-     * @param string $option Option name.
      * @return array The filtered option value.
      */
-    public function pre_update_option(array $new_value, array $old_value, string $option): array {
+    public function pre_update_option(array $new_value): array {
         foreach ($new_value as $key => $value) {
             // If this is the option for a directive value, sanitize it.
             if($key != 'mode' || !(strpos($key, 'enable_') === 0) || (array_key_exists($this->directives[$key]) && !array_key_exists($this->directives[$key]['type']))) {
