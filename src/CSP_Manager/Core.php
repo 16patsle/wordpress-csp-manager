@@ -50,7 +50,8 @@ class Core {
             $option = get_option('csp_manager_frontend');
         }
 
-        if($option['mode'] !== 'disabled') {
+        // Option is false if it has not been set yet
+        if ($option !== false && $option['mode'] !== 'disabled') {
             $header = 'Content-Security-Policy';
 
             if($option['mode'] === 'report') {
