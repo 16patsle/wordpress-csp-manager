@@ -45,7 +45,7 @@ class Settings {
      * CSP directives and descriptions.
      * 
      * @since 1.0.0
-     * @var string[]
+     * @var array[]
      */
     protected $directives;
 
@@ -575,7 +575,7 @@ class Settings {
     public function pre_update_option(array $new_value): array {
         foreach ($new_value as $key => $value) {
             // If this is the option for a directive value, sanitize it.
-            if($key != 'mode' || !(strpos($key, 'enable_') === 0) || (array_key_exists($this->directives[$key]) && !array_key_exists($this->directives[$key]['type']))) {
+            if($key != 'mode' || !(strpos($key, 'enable_') === 0) || (array_key_exists($key, $this->directives) && !array_key_exists('type', $this->directives[$key]))) {
                 // Replace newlines with spaces
                 $sanitized_value = preg_replace('/\R/u', ' ', $value);
 
