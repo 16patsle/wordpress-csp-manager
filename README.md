@@ -5,7 +5,7 @@ Tags: csp, content security policy, security, security headers, xss
 Requires at least: 4.6
 Requires PHP: 7.2
 Tested up to: 5.7
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv3 or later
 License URI: <http://www.gnu.org/licenses/gpl-3.0.html>
 
@@ -42,6 +42,7 @@ This plugin's development happens in [its GitHub repo](https://github.com/16pats
 - Improved UI, with CSP directives divided into collapsible categories.
 - Add all remaining non-deprecated CSP directives.
 - Warn if enabling upgrade-insecure-requests on a site that does not support HTTPS.
+- Sanitize directives on save and disallow newlines in header content.
 - Various internal improvements.
 
 ### 1.1.0

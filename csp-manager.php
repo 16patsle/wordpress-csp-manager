@@ -8,7 +8,7 @@
  * 
  * Plugin Name:       CSP Manager
  * Description:       Manage Content Security Policies separately for wp-admin, logged in users and regular users.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Requires at least: 4.6
  * Requires PHP:      7.2
  * Author:            Patrick Sletvold
