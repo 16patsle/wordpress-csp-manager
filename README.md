@@ -4,7 +4,7 @@ Contributors: 16patsle
 Tags: csp, content security policy, security, security headers, xss
 Requires at least: 4.6
 Requires PHP: 7.2
-Tested up to: 5.7
+Tested up to: 6.2
 Stable tag: 1.2.1
 License: GPLv3 or later
 License URI: <http://www.gnu.org/licenses/gpl-3.0.html>
@@ -39,7 +39,7 @@ This plugin's development happens in [its GitHub repo](https://github.com/16pats
 
 ### 1.2.1
 
-- Fix mode validation on Output CSP headers
+- Fix error caused by improperly checking the chosen CSP mode when outputting headers (thanks @reatlat).
 
 ### 1.2.0
 
