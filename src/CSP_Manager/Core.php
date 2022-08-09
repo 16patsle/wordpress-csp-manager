@@ -51,7 +51,7 @@ class Core {
         }
 
         // Option is false if it has not been set yet
-        if ($option !== false && $option['mode'] !== 'disabled') {
+        if ($option !== false && isset($option['mode']) && $option['mode'] !== 'disabled') {
             $header = 'Content-Security-Policy';
 
             if($option['mode'] === 'report') {

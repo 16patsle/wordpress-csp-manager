@@ -5,7 +5,7 @@ Tags: csp, content security policy, security, security headers, xss
 Requires at least: 4.6
 Requires PHP: 7.2
 Tested up to: 5.7
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv3 or later
 License URI: <http://www.gnu.org/licenses/gpl-3.0.html>
 
@@ -36,6 +36,10 @@ Reporting can be enabled both in report only mode and in enforce mode. You can u
 ## Changelog
 
 This plugin's development happens in [its GitHub repo](https://github.com/16patsle/wordpress-csp-manager). Feel free to send bug reports there.
+
+### 1.2.1
+
+- Fix mode validation on Output CSP headers
 
 ### 1.2.0
 
