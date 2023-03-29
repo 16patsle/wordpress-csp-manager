@@ -574,6 +574,10 @@ class Settings {
      */
     public function pre_update_option(array $new_value): array {
         foreach ($new_value as $key => $value) {
+            if (strpos($key, 'header_reportto') !== false) {
+                $new_value[$key] = empty(trim($value)) || empty(json_decode($value)) ? '' : $value;
+                continue;
+            }
             // If this is the option for a directive value, sanitize it.
             if($key != 'mode' || !(strpos($key, 'enable_') === 0) || (array_key_exists($key, $this->directives) && !array_key_exists('type', $this->directives[$key]))) {
                 // Replace newlines with spaces
